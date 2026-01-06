@@ -28,7 +28,7 @@ function App() {
                 init={particlesInit}
                 options={{
                     background: { color: { value: "transparent" } },
-                    fpsLimit: 120,
+                    fpsLimit: 60, // Limit to 60 FPS for performance
                     interactivity: {
                         events: {
                             onClick: { enable: true, mode: "push" },
@@ -57,7 +57,8 @@ function App() {
                             speed: 0.5,
                             straight: false,
                         },
-                        number: { density: { enable: true, area: 800 }, value: 100 },
+                        // Reduced from 100 -> 50 for mobile/low-end device performance
+                        number: { density: { enable: true, area: 800 }, value: 50 },
                         opacity: { value: 0.5 },
                         shape: { type: "circle" },
                         size: { value: { min: 3, max: 6 } },
