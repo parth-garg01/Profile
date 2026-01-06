@@ -1,0 +1,110 @@
+@import url('https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;600&family=Oswald:wght@400;700&family=Space+Mono&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+html {
+    scroll-behavior: smooth;
+    scroll-snap-type: y proximity;
+    /* The 'Pop' effect - simpler than mandatory */
+}
+
+body {
+    background-color: #010113;
+    color: #ffffff;
+    @apply bg-primary text-white font-sans overflow-x-hidden cursor-none;
+    /* Hide default cursor */
+    margin: 0;
+    padding: 0;
+}
+
+/* Sticky Stacking Logic */
+.sticky-wrapper {
+    position: relative;
+    /* Ensure parent allows sticky children */
+}
+
+section {
+    scroll-snap-align: start;
+    /* Snap to top of sections */
+    position: relative;
+    /* Default for mobile: natural flow */
+    min-height: 100vh;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* Sticky Stacking REMOVED - restoring natural scroll */
+@media (min-width: 768px) {
+    section {
+        position: relative;
+        top: auto;
+        min-height: 100vh;
+        height: auto;
+        overflow: visible;
+        box-shadow: none;
+    }
+}
+
+/* Ensure z-indexes stack properly - Higher number = Higher stack order */
+/* Explicit Stacking Orders for Robustness */
+.stack-1 {
+    z-index: 10;
+}
+
+.stack-2 {
+    z-index: 20;
+}
+
+.stack-3 {
+    z-index: 30;
+}
+
+.stack-4 {
+    z-index: 40;
+}
+
+.stack-5 {
+    z-index: 50;
+}
+
+.stack-6 {
+    z-index: 60;
+}
+
+.stack-7 {
+    z-index: 70;
+}
+
+.stack-8 {
+    z-index: 80;
+}
+
+.stack-9 {
+    z-index: 90;
+}
+
+.stack-10 {
+    z-index: 100;
+}
+
+/* Custom Scrollbar for that 'Tech' feel */
+::-webkit-scrollbar {
+    width: 8px;
+}
+
+::-webkit-scrollbar-track {
+    background: #010113;
+}
+
+::-webkit-scrollbar-thumb {
+    background: #333;
+    border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: #E6B35C;
+}
