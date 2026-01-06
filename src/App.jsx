@@ -53,13 +53,13 @@ function App() {
                             speed: 0.3, // Slower, calmer movement
                             straight: false,
                         },
-                        // Drastically reduced for performance
-                        number: { density: { enable: true, area: 800 }, value: 30 },
+                        // Extreme optimization
+                        number: { density: { enable: true, area: 800 }, value: 20 },
                         opacity: { value: 0.3 },
                         shape: { type: "circle" },
                         size: { value: { min: 2, max: 4 } },
                     },
-                    detectRetina: true,
+                    detectRetina: false, // Critical for performance on high-DPI screens
                     fullScreen: { enable: false, zIndex: 0 },
                 }}
                 className="absolute inset-0 z-[100] h-full w-full fixed pointer-events-none"
