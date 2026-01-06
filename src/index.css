@@ -5,9 +5,8 @@
 @tailwind utilities;
 
 html {
-    scroll-behavior: smooth;
+    /* scroll-behavior: smooth; REMOVED for instant/native feel */
     scroll-snap-type: y proximity;
-    /* The 'Pop' effect - simpler than mandatory */
 }
 
 body {

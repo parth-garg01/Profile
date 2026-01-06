@@ -43,25 +43,21 @@ function App() {
                     particles: {
                         color: { value: "#aa8030" },
                         links: {
-                            color: "#aa8030",
-                            distance: 150,
-                            enable: true,
-                            opacity: 0.1,
-                            width: 1,
+                            enable: false, // DISABLED for performance
                         },
                         move: {
-                            direction: "none",
+                            direction: "top",
                             enable: true,
-                            outModes: { default: "bounce" },
-                            random: false,
-                            speed: 0.5,
+                            outModes: { default: "out" },
+                            random: true,
+                            speed: 0.3, // Slower, calmer movement
                             straight: false,
                         },
-                        // Reduced from 100 -> 50 for mobile/low-end device performance
-                        number: { density: { enable: true, area: 800 }, value: 50 },
-                        opacity: { value: 0.5 },
+                        // Drastically reduced for performance
+                        number: { density: { enable: true, area: 800 }, value: 30 },
+                        opacity: { value: 0.3 },
                         shape: { type: "circle" },
-                        size: { value: { min: 3, max: 6 } },
+                        size: { value: { min: 2, max: 4 } },
                     },
                     detectRetina: true,
                     fullScreen: { enable: false, zIndex: 0 },
