@@ -59,7 +59,7 @@ function App() {
                         shape: { type: "circle" },
                         size: { value: { min: 2, max: 4 } },
                     },
-                    detectRetina: false, // Critical for performance on high-DPI screens
+                    detectRetina: true,
                     fullScreen: { enable: false, zIndex: 0 },
                 }}
                 className="absolute inset-0 z-[100] h-full w-full fixed pointer-events-none"

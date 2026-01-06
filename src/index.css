@@ -5,7 +5,7 @@
 @tailwind utilities;
 
 html {
-    /* scroll-behavior: smooth; REMOVED for instant/native feel */
+    scroll-behavior: smooth;
     scroll-snap-type: y proximity;
 }
 
