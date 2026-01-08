@@ -6,33 +6,43 @@ export const profileData = {
         linkedin: "https://www.linkedin.com/in/parth-garg-588842306/",
         github: "https://github.com/parth-garg01",
     },
-    about: "I am a second-year student at VIT Vellore with a passion for bridging software and hardware. My interests lie in IoT, Data Science, Robotics, and Machine Learning. I enjoy solving complex problems using Python, C++, and Java.",
+    about: "Parth Garg is a second-year engineering student at VIT Vellore, with a strong interest in the intersection of software and hardware, particularly in the fields of IoT, data science, Robotics and machine learning. He is proficient in Python, C, C++ and Java, and is currently deepening his understanding of machine learning and its applications. Parth recently held a Data Analytics position during his internship at Fintoric Capital, where he worked on extracting insights from financial data. In addition, he is actively involved in academic research and is co-authoring research and review papers under the guidance of his faculty on contemporary and impactful technological topics.",
     education: [
         {
-            institution: "Vellore Institute of Technology",
+            institution: "Vellore Institute of Technology, Vellore",
             degree: "B.Tech in Computer Science",
             period: "2024 - 2028 (Expected)",
         },
         {
             institution: "The Vivekanand School Narela",
-            degree: "High School",
+            degree: "Senior Secondary School Certificate (Class 12th)",
             period: "2022 - 2024",
+        },
+        {
+            institution: "Little Scholars School Kashipur",
+            degree: "Secondary School Certificate (Class 10th)",
+            period: "2017 - 2022",
+        },
+        {
+            institution: "Delhi Public School",
+            degree: "Primary School Certificate",
+            period: "2014 - 2017",
         }
     ],
     journey: [
         {
             year: "2025 - Present",
-            role: "Junior Core Member",
+            role: "Reseach and Development Head",
             company: "TAM-VIT",
-            description: "Organizing workshops on AI in Defence and contributing to technical events. Leading a team of 5 for event management.",
-            tech: ["Event Management", "Team Leadership", "Public Speaking"],
+            description: "Organised various workshops and contributed to technical events.",
+            tech: ["Research and Development", "AI & ML", "Event Management", "Team Leadership", "Public Speaking"],
         },
         {
             year: "May 2025 - June 2025",
             role: "Data Analyst Intern",
             company: "Fintoric Capital",
             description: "Analyzed trading strategies (Iron Condor, etc.) and developed data-driven insights using Python. Automated report generation reducing 2 hours of manual work daily.",
-            tech: ["Python", "Pandas", "Data Visualization", "Algorithmic Trading"],
+            tech: ["Python", "Pandas", "MatplotLib", "Data Visualization", "Algorithmic Trading"],
         },
         {
             year: "2024 - 2028",
@@ -111,6 +121,18 @@ export const profileData = {
             link: "#"
         },
         {
+            title: "MyTuneVault ",
+            description: "Created a clone of the Spotify interface and added all the songs from my playlist. It allows me to listen to music without any ad breaks.",
+            tech: ["React", "JavaScript", "CSS", "HTML"],
+            link: "#"
+        },
+        {
+            title: "Thermal DDoS Detector",
+            description: "A network security tool that monitors thermal signatures of devices to detect potential DDoS attacks in real-time. Utilizes machine learning algorithms for anomaly detection.",
+            tech: ["Python", "Machine Learning", "Ardiuno", "IoT"],
+            link: "#"
+        },
+        {
             title: "Portfolio Website",
             description: "A modern, high-performance portfolio website with glassmorphism and stacked transitions. Built with React and Vite.",
             tech: ["React", "Tailwind CSS", "Framer Motion"],
@@ -118,6 +140,11 @@ export const profileData = {
         }
     ],
     hobbies: [
+        { name: "Coding", icon: "Code" },
+        { name: "Hackthon", icon: "Trophy" },
+        { name: "Abacus", icon: "Calculator" },
+        { name: "Harmonium", icon: "Music" },
+        { name: "Public Speaking", icon: "Mic" },
         { name: "Robotics", icon: "Bot" },
         { name: "Chess", icon: "Gamepad2" },
         { name: "Reading", icon: "Book" },

@@ -55,7 +55,7 @@ const Cursor = () => {
                     y: mousePosition.y - 16,
                     scale: isHovering ? 1.5 : 1
                 }}
-                transition={{ type: "spring", stiffness: 150, damping: 15, mass: 0.5 }}
+                transition={{ type: "spring", stiffness: 100, damping: 25, mass: 0.5 }}
             />
         </>
     );

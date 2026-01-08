@@ -13,7 +13,7 @@ const About = ({ className }) => {
                     initial={{ opacity: 0, y: 20 }}
                     whileInView={{ opacity: 1, y: 0 }}
                     viewport={{ once: true }}
-                    className="p-8 border border-white/5 bg-white/5 rounded-2xl"
+                    className="p-8 border border-white/5 bg-white/5 backdrop-blur-sm rounded-2xl"
                 >
                     <h2 className="font-display text-4xl font-bold text-white mb-8">ABOUT <span className="text-accent">ME</span></h2>
                     <p className="font-sans text-secondary text-lg leading-relaxed">

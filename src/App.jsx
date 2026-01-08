@@ -28,7 +28,7 @@ function App() {
                 init={particlesInit}
                 options={{
                     background: { color: { value: "transparent" } },
-                    fpsLimit: 60, // Limit to 60 FPS for performance
+                    fpsLimit: 120,
                     interactivity: {
                         events: {
                             onClick: { enable: true, mode: "push" },
@@ -43,21 +43,24 @@ function App() {
                     particles: {
                         color: { value: "#aa8030" },
                         links: {
-                            enable: false, // DISABLED for performance
+                            color: "#aa8030",
+                            distance: 150,
+                            enable: true,
+                            opacity: 0.1,
+                            width: 1,
                         },
                         move: {
-                            direction: "top",
+                            direction: "none",
                             enable: true,
-                            outModes: { default: "out" },
-                            random: true,
-                            speed: 0.3, // Slower, calmer movement
+                            outModes: { default: "bounce" },
+                            random: false,
+                            speed: 0.5,
                             straight: false,
                         },
-                        // Extreme optimization
-                        number: { density: { enable: true, area: 800 }, value: 20 },
-                        opacity: { value: 0.3 },
+                        number: { density: { enable: true, area: 800 }, value: 100 },
+                        opacity: { value: 0.5 },
                         shape: { type: "circle" },
-                        size: { value: { min: 2, max: 4 } },
+                        size: { value: { min: 3, max: 6 } },
                     },
                     detectRetina: true,
                     fullScreen: { enable: false, zIndex: 0 },
