@@ -15,7 +15,7 @@ const Education = ({ className }) => {
                     <div className="p-2 bg-accent/10 rounded-lg">
                         <GraduationCap size={24} className="text-accent" />
                     </div>
-                    <h2 className="font-display text-3xl font-bold text-white">EDUCATION</h2>
+                    <h2 className="font-display text-4xl font-bold text-white">EDUCATION</h2>
                 </motion.div>
 
                 <div className="space-y-4">

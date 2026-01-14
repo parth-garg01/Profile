@@ -12,7 +12,7 @@ const Hobbies = ({ className }) => {
                     whileInView={{ opacity: 1, y: 0 }}
                     className="mb-12"
                 >
-                    <h2 className="font-display text-3xl font-bold text-white">BEYOND <span className="text-accent">CODE</span></h2>
+                    <h2 className="font-display text-4xl font-bold text-white">HOBBIES AND <span className="text-accent">INTERESTS</span></h2>
                 </motion.div>
 
                 <div className="grid grid-cols-2 md:grid-cols-4 gap-6">

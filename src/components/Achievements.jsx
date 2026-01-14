@@ -10,7 +10,7 @@ const Achievements = ({ className }) => {
                 <motion.h2
                     initial={{ opacity: 0 }}
                     whileInView={{ opacity: 1 }}
-                    className="font-display text-4xl md:text-5xl font-bold text-white mb-16 text-center"
+                    className="font-display text-4xl font-bold text-white mb-16 text-center"
                 >
                     ACHIEVEMENTS & <span className="text-accent">CERTIFICATIONS</span>
                 </motion.h2>

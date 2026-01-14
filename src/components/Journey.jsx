@@ -4,7 +4,7 @@ import { profileData } from '../data';
 
 const Journey = ({ className }) => {
     return (
-        <section id="journey" className={`bg-primary overflow-hidden ${className}`}>
+        <section id="experience" className={`bg-primary overflow-hidden ${className}`}>
             {/* Gradient Background for this card - Optional: keep vivid or make subtle */}
             <div className="absolute inset-0 bg-gradient-to-b from-primary/50 via-[#05051e]/50 to-primary/50 opacity-80 pointer-events-none"></div>
 

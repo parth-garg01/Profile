@@ -15,7 +15,7 @@ const Contact = ({ className }) => {
                     whileInView={{ opacity: 1, scale: 1 }}
                     className="bg-[#050515] border border-white/10 p-12 rounded-3xl"
                 >
-                    <h2 className="font-display text-4xl md:text-5xl font-bold text-white mb-6">Let's <span className="text-accent">Connect</span></h2>
+                    <h2 className="font-display text-4xl font-bold text-white mb-6">Let's <span className="text-accent">Connect</span></h2>
                     <p className="text-xl text-secondary mb-12 max-w-2xl mx-auto">
                         Whether you have a project in mind, a question about my work, or just want to say hi, I'm always open to discussing new opportunities.
                     </p>

@@ -48,7 +48,7 @@ export const profileData = {
             year: "2024 - 2028",
             role: "B.Tech in Computer Science",
             company: "Vellore Institute of Technology",
-            description: "Maintaining a CGPA of 9.0+. Active member of Robotics Club.",
+            description: "Pursuing undergraduate studies with a focus on software development, data structures, algorithms, and machine learning. Engaged in various projects and hackathons to apply theoretical knowledge practically.",
             tech: ["Computer Science", "Engineering"],
         },
     ],
@@ -130,6 +130,12 @@ export const profileData = {
             title: "Thermal DDoS Detector",
             description: "A network security tool that monitors thermal signatures of devices to detect potential DDoS attacks in real-time. Utilizes machine learning algorithms for anomaly detection.",
             tech: ["Python", "Machine Learning", "Ardiuno", "IoT"],
+            link: "#"
+        },
+        {
+            title: "Government Workflow Optimizer",
+            description: "A machine learning-based system that predicts government file processing times and identifies delay risks. Features synthetic data generation, ML models for regression and classification, and an interactive Streamlit dashboard for workflow optimization.",
+            tech: ["Streamlit","Scikit-learn","LightGBM","Plotly","Pandas"],
             link: "#"
         },
         {

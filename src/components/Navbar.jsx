@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Menu, X } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
+import gsap from 'gsap';
 
 const Navbar = () => {
     const [isOpen, setIsOpen] = useState(false);
@@ -11,14 +12,30 @@ const Navbar = () => {
             setScrolled(window.scrollY > 50);
         };
         window.addEventListener('scroll', handleScroll);
-        return () => window.removeEventListener('scroll', handleScroll);
+
+        // GSAP Animation for Navbar Links
+        const ctx = gsap.context(() => {
+            gsap.from(".nav-link", {
+                y: -20,
+                opacity: 0,
+                duration: 0.8,
+                stagger: 0.1,
+                ease: "power3.out",
+                delay: 0.5 // Wait for Hero text slightly
+            });
+        });
+
+        return () => {
+            window.removeEventListener('scroll', handleScroll);
+            ctx.revert();
+        };
     }, []);
 
     const links = [
         { name: 'About', href: '#about' },
-        { name: 'Experience', href: '#experience' },
-        { name: 'Projects', href: '#projects' },
         { name: 'Skills', href: '#skills' },
+        { name: 'Projects', href: '#projects' },
+        { name: 'Experience', href: '#experience' },
         { name: 'Contact', href: '#contact' },
     ];
 
@@ -30,12 +47,12 @@ const Navbar = () => {
                 </a>
 
                 {/* Desktop Menu */}
-                <div className="hidden md:flex space-x-8">
+                <div className="hidden md:flex space-x-8" id="nav-container">
                     {links.map((link) => (
                         <a
                             key={link.name}
                             href={link.href}
-                            className="font-mono text-sm text-secondary hover:text-accent transition-colors duration-300 uppercase tracking-widest"
+                            className="nav-link font-mono text-sm text-secondary hover:text-accent transition-colors duration-300 uppercase tracking-widest"
                         >
                             {link.name}
                         </a>
