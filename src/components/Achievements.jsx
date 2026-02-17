@@ -10,6 +10,7 @@ const Achievements = ({ className }) => {
                 <motion.h2
                     initial={{ opacity: 0 }}
                     whileInView={{ opacity: 1 }}
+                    viewport={{ once: true }}
                     className="font-display text-4xl font-bold text-white mb-16 text-center"
                 >
                     ACHIEVEMENTS & <span className="text-accent">CERTIFICATIONS</span>
@@ -21,6 +22,7 @@ const Achievements = ({ className }) => {
                             key={index}
                             initial={{ opacity: 0, y: 20 }}
                             whileInView={{ opacity: 1, y: 0 }}
+                            viewport={{ once: true }}
                             transition={{ delay: index * 0.1 }}
                             whileHover={{ y: -5 }}
                             className="bg-white/5 border border-white/10 p-8 rounded-2xl hover:border-accent/40 transition-all duration-300 flex flex-col h-full"

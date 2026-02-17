@@ -13,6 +13,7 @@ const Contact = ({ className }) => {
                 <motion.div
                     initial={{ opacity: 0, scale: 0.9 }}
                     whileInView={{ opacity: 1, scale: 1 }}
+                    viewport={{ once: true }}
                     className="bg-[#050515] border border-white/10 p-12 rounded-3xl"
                 >
                     <h2 className="font-display text-4xl font-bold text-white mb-6">Let's <span className="text-accent">Connect</span></h2>

@@ -10,6 +10,7 @@ const Projects = ({ className }) => {
                 <motion.div
                     initial={{ opacity: 0 }}
                     whileInView={{ opacity: 1 }}
+                    viewport={{ once: true }}
                     className="mb-16 text-center"
                 >
                     <h2 className="font-display text-4xl font-bold text-white mb-2"><span className="text-accent">PROJECTS</span></h2>
@@ -22,6 +23,7 @@ const Projects = ({ className }) => {
                             key={index}
                             initial={{ opacity: 0, y: 20 }}
                             whileInView={{ opacity: 1, y: 0 }}
+                            viewport={{ once: true }}
                             transition={{ delay: index * 0.1 }}
                             className="group relative bg-[#050510] border border-white/10 rounded-2xl overflow-hidden flex flex-col"
                         >

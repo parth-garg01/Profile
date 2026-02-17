@@ -12,6 +12,7 @@ const Journey = ({ className }) => {
                 <motion.div
                     initial={{ opacity: 0 }}
                     whileInView={{ opacity: 1 }}
+                    viewport={{ once: true }}
                     className="mb-16 text-center"
                 >
                     <h2 className="font-display text-4xl font-bold text-white mb-2">MY <span className="text-accent">JOURNEY</span></h2>
@@ -24,6 +25,7 @@ const Journey = ({ className }) => {
                             key={index}
                             initial={{ opacity: 0, x: -20 }}
                             whileInView={{ opacity: 1, x: 0 }}
+                            viewport={{ once: true }}
                             transition={{ delay: index * 0.1 }}
                             className="relative md:grid md:grid-cols-5 md:gap-8 group"
                         >

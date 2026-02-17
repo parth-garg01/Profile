@@ -61,7 +61,7 @@ const Hero = ({ className }) => {
             });
         };
 
-        window.addEventListener('mousemove', handleMouseMove);
+        window.addEventListener('mousemove', handleMouseMove, { passive: true });
 
         return () => {
             ctx.revert();
@@ -75,7 +75,7 @@ const Hero = ({ className }) => {
         <section ref={component} className={`h-[100svh] w-full flex items-center justify-center overflow-hidden bg-transparent perspective-1000 ${className}`}>
             {/* Content Overlay */}
             <div className="relative z-10 text-center px-4 max-w-5xl mx-auto perspective-1000">
-                <div ref={contentRef} className="will-change-transform transform-style-3d">
+                <div ref={contentRef} className="will-change-transform" style={{ transformStyle: 'preserve-3d' }}>
                     <h2 className="hero-subtitle font-mono text-accent text-sm md:text-base mb-4 tracking-[0.2em] uppercase">
                         Hello, World! I am
                     </h2>

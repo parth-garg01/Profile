@@ -1,46 +1,41 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 import { profileData } from '../data';
-import * as FaIcons from 'react-icons/fa';
-import * as SiIcons from 'react-icons/si';
-import * as BiIcons from 'react-icons/bi';
+import { FaPython, FaJava, FaBrain, FaChartBar, FaCode, FaChartPie } from 'react-icons/fa';
+import { SiCplusplus, SiC, SiSharp, SiReact, SiJavascript, SiTailwindcss, SiMysql, SiGit, SiNumpy, SiPandas, SiArduino } from 'react-icons/si';
+import { BiChip } from 'react-icons/bi';
 
 // Helper to dynamically find an icon with BRAND COLORS
+const iconMap = {
+    'python': { icon: FaPython, color: '#3776AB' },
+    'c++': { icon: SiCplusplus, color: '#00599C' },
+    'cplusplus': { icon: SiCplusplus, color: '#00599C' },
+    'c': { icon: SiC, color: '#A8B9CC' },
+    'c#': { icon: SiSharp, color: '#239120' },
+    'csharp': { icon: SiSharp, color: '#239120' },
+    'java': { icon: FaJava, color: '#007396' },
+    'react': { icon: SiReact, color: '#61DAFB' },
+    'javascript': { icon: SiJavascript, color: '#F7DF1E' },
+    'tailwindcss': { icon: SiTailwindcss, color: '#06B6D4' },
+    'mysql': { icon: SiMysql, color: '#4479A1' },
+    'git': { icon: SiGit, color: '#F05032' },
+    'machinelearning': { icon: FaBrain, color: '#F7931E' },
+    'dataanalysis': { icon: FaChartBar, color: '#36A2EB' },
+    'iot': { icon: BiChip, color: '#4CAF50' },
+    'numpy': { icon: SiNumpy, color: '#013243' },
+    'pandas': { icon: SiPandas, color: '#150458' },
+    'arduino': { icon: SiArduino, color: '#00979D' },
+    'matplotlib': { icon: FaChartPie, color: '#11557c' },
+};
+
 const getIcon = (skillName) => {
     const standardizedName = skillName.toLowerCase().replace(/[\s\.]/g, '');
-
-    // Manual overrides for specific icons and colors
-    const map = {
-        'python': { icon: FaIcons.FaPython, color: '#3776AB' },
-        'c++': { icon: SiIcons.SiCplusplus, color: '#00599C' },
-        'cplusplus': { icon: SiIcons.SiCplusplus, color: '#00599C' },
-        'c': { icon: SiIcons.SiC, color: '#A8B9CC' },
-        'c#': { icon: SiIcons.SiCsharp, color: '#239120' },
-        'csharp': { icon: SiIcons.SiCsharp, color: '#239120' },
-        'java': { icon: FaIcons.FaJava, color: '#007396' },
-        'react': { icon: SiIcons.SiReact, color: '#61DAFB' },
-        'javascript': { icon: SiIcons.SiJavascript, color: '#F7DF1E' },
-        'tailwindcss': { icon: SiIcons.SiTailwindcss, color: '#06B6D4' },
-        'mysql': { icon: SiIcons.SiMysql, color: '#4479A1' },
-        'git': { icon: SiIcons.SiGit, color: '#F05032' },
-        'machinelearning': { icon: FaIcons.FaBrain, color: '#F7931E' }, // Generic Brain
-        'dataanalysis': { icon: FaIcons.FaChartBar, color: '#36A2EB' },
-        'iot': { icon: BiIcons.BiChip, color: '#4CAF50' },
-        'numpy': { icon: SiIcons.SiNumpy, color: '#013243' },
-        'pandas': { icon: SiIcons.SiPandas, color: '#150458' },
-        'arduino': { icon: SiIcons.SiArduino, color: '#00979D' },
-        'matplotlib': { icon: FaIcons.FaChartPie, color: '#11557c' }, // Fallback to chart
-    };
-
-    if (map[standardizedName]) {
-        const { icon: Icon, color } = map[standardizedName];
-        if (Icon) {
-            return <Icon size={40} color={color} />;
-        }
+    const match = iconMap[standardizedName];
+    if (match) {
+        const { icon: Icon, color } = match;
+        return <Icon size={40} color={color} />;
     }
-
-    // Default Fallback
-    return <FaIcons.FaCode size={40} className="text-white" />;
+    return <FaCode size={40} className="text-white" />;
 };
 
 const Skills = ({ className }) => {
@@ -66,6 +61,7 @@ const Skills = ({ className }) => {
                             whileHover={{ scale: 1.1, borderColor: '#fff' }}
                             initial={{ opacity: 0, y: 20 }}
                             whileInView={{ opacity: 1, y: 0 }}
+                            viewport={{ once: true }}
                             transition={{ delay: index * 0.05 }}
                             className="bg-white/5 border border-white/10 p-6 rounded-xl flex flex-col items-center justify-center gap-4 hover:bg-white/10 transition-all duration-300 group aspect-square"
                         >
