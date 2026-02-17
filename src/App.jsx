@@ -10,10 +10,12 @@ import Hobbies from './components/Hobbies';
 import Education from './components/Education';
 import Contact from './components/Contact';
 import Cursor from './components/Cursor';
+import ScrollProgress from './components/ScrollProgress';
 
 function App() {
     return (
         <div className="bg-primary min-h-screen relative sticky-wrapper cursor-none">
+            <ScrollProgress />
             <Cursor />
 
             <Navbar />

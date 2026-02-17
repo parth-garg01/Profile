@@ -1,21 +1,50 @@
-import React from 'react';
+import React, { useEffect, useRef } from 'react';
 import { motion } from 'framer-motion';
 import { profileData } from '../data';
 import { Github, ExternalLink } from 'lucide-react';
+import gsap from 'gsap';
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
+
+gsap.registerPlugin(ScrollTrigger);
 
 const Projects = ({ className }) => {
+    const sectionRef = useRef(null);
+
+    useEffect(() => {
+        const ctx = gsap.context(() => {
+            gsap.from('.projects-heading', {
+                y: 30,
+                opacity: 0,
+                duration: 0.8,
+                ease: 'power3.out',
+                scrollTrigger: {
+                    trigger: sectionRef.current,
+                    start: 'top 80%',
+                    toggleActions: 'play none none none',
+                },
+            });
+            gsap.from('.projects-line', {
+                scaleX: 0,
+                duration: 1,
+                ease: 'power3.out',
+                scrollTrigger: {
+                    trigger: sectionRef.current,
+                    start: 'top 80%',
+                    toggleActions: 'play none none none',
+                },
+            });
+        }, sectionRef);
+
+        return () => ctx.revert();
+    }, []);
+
     return (
-        <section id="projects" className={`py-32 bg-primary ${className}`}>
+        <section ref={sectionRef} id="projects" className={`py-32 bg-primary ${className}`}>
             <div className="max-w-7xl mx-auto px-6">
-                <motion.div
-                    initial={{ opacity: 0 }}
-                    whileInView={{ opacity: 1 }}
-                    viewport={{ once: true }}
-                    className="mb-16 text-center"
-                >
-                    <h2 className="font-display text-4xl font-bold text-white mb-2"><span className="text-accent">PROJECTS</span></h2>
-                    <div className="w-16 h-1 bg-accent mx-auto"></div>
-                </motion.div>
+                <div className="mb-16 text-center">
+                    <h2 className="projects-heading font-display text-4xl font-bold text-white mb-2"><span className="text-accent">PROJECTS</span></h2>
+                    <div className="projects-line w-16 h-1 bg-accent mx-auto origin-center"></div>
+                </div>
 
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
                     {profileData.projects.map((project, index) => (
@@ -28,7 +57,6 @@ const Projects = ({ className }) => {
                             className="group relative bg-[#050510] border border-white/10 rounded-2xl overflow-hidden flex flex-col"
                         >
                             <div className="h-40 overflow-hidden shrink-0">
-                                {/* Placeholder or actual image */}
                                 <div className="w-full h-full bg-accent/5 group-hover:bg-accent/10 transition-colors flex items-center justify-center">
                                     <span className="font-display text-3xl text-white/20 font-bold">{project.title.charAt(0)}</span>
                                 </div>
@@ -61,3 +89,4 @@ const Projects = ({ className }) => {
 };
 
 export default Projects;
+

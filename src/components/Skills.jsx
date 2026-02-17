@@ -1,9 +1,13 @@
-import React from 'react';
+import React, { useEffect, useRef } from 'react';
 import { motion } from 'framer-motion';
 import { profileData } from '../data';
 import { FaPython, FaJava, FaBrain, FaChartBar, FaCode, FaChartPie } from 'react-icons/fa';
 import { SiCplusplus, SiC, SiSharp, SiReact, SiJavascript, SiTailwindcss, SiMysql, SiGit, SiNumpy, SiPandas, SiArduino } from 'react-icons/si';
 import { BiChip } from 'react-icons/bi';
+import gsap from 'gsap';
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
+
+gsap.registerPlugin(ScrollTrigger);
 
 // Helper to dynamically find an icon with BRAND COLORS
 const iconMap = {
@@ -39,20 +43,47 @@ const getIcon = (skillName) => {
 };
 
 const Skills = ({ className }) => {
+    const sectionRef = useRef(null);
     const technicalSkills = profileData.skills.filter(s => s.category === 'Technical');
 
+    useEffect(() => {
+        const ctx = gsap.context(() => {
+            // Accent line grows from center
+            gsap.from('.skills-line', {
+                scaleX: 0,
+                duration: 1,
+                ease: 'power3.out',
+                scrollTrigger: {
+                    trigger: sectionRef.current,
+                    start: 'top 80%',
+                    toggleActions: 'play none none none',
+                },
+            });
+
+            // Heading slides up
+            gsap.from('.skills-heading', {
+                y: 30,
+                opacity: 0,
+                duration: 0.8,
+                ease: 'power3.out',
+                scrollTrigger: {
+                    trigger: sectionRef.current,
+                    start: 'top 80%',
+                    toggleActions: 'play none none none',
+                },
+            });
+        }, sectionRef);
+
+        return () => ctx.revert();
+    }, []);
+
     return (
-        <section id="skills" className={`py-24 bg-primary overflow-hidden ${className}`}>
+        <section ref={sectionRef} id="skills" className={`py-24 bg-primary overflow-hidden ${className}`}>
             <div className="max-w-7xl mx-auto px-6 relative z-10 w-full text-center">
-                <motion.div
-                    initial={{ opacity: 0 }}
-                    whileInView={{ opacity: 1 }}
-                    viewport={{ once: true }}
-                    className="mb-16"
-                >
-                    <h2 className="font-display text-4xl font-bold text-white mb-2">TECHNICAL <span className="text-accent">ARSENAL</span></h2>
-                    <div className="w-16 h-1 bg-accent mx-auto"></div>
-                </motion.div>
+                <div className="mb-16">
+                    <h2 className="skills-heading font-display text-4xl font-bold text-white mb-2">TECHNICAL <span className="text-accent">ARSENAL</span></h2>
+                    <div className="skills-line w-16 h-1 bg-accent mx-auto origin-center"></div>
+                </div>
 
                 <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-8">
                     {technicalSkills.map((skill, index) => (
