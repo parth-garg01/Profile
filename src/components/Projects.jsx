@@ -63,7 +63,7 @@ const Projects = ({ className }) => {
                             </div>
                             <div className="p-6 flex flex-col flex-grow">
                                 <h3 className="text-xl font-bold text-white mb-2 group-hover:text-accent transition-colors">{project.title}</h3>
-                                <p className="text-secondary text-sm mb-4 line-clamp-3 leading-relaxed flex-grow">{project.description}</p>
+                                <p className="text-secondary text-sm mb-4 leading-relaxed flex-grow">{project.description}</p>
                                 <div className="flex flex-wrap gap-2 mb-4">
                                     {project.tech.map(t => (
                                         <span key={t} className="text-[10px] font-mono text-accent bg-accent/10 px-2 py-0.5 rounded">
