@@ -135,13 +135,25 @@ export const profileData = {
         {
             title: "Government Workflow Optimizer",
             description: "A machine learning-based system that predicts government file processing times and identifies delay risks. Features synthetic data generation, ML models for regression and classification, and an interactive Streamlit dashboard for workflow optimization.",
-            tech: ["Streamlit","Scikit-learn","LightGBM","Plotly","Pandas"],
+            tech: ["Streamlit", "Scikit-learn", "LightGBM", "Plotly", "Pandas"],
             link: "#"
         },
         {
             title: "Portfolio Website",
             description: "A modern, high-performance portfolio website with glassmorphism and stacked transitions. Built with React and Vite.",
             tech: ["React", "Tailwind CSS", "Framer Motion"],
+            link: "#"
+        },
+        {
+            title: "GazePoint",
+            description: "Control your computer cursor using only your eyes. GazePoint uses real-time iris tracking via MediaPipe to move the mouse with head-independent normalization and 4-point full-screen calibration. Supports double-blink left-click, long-blink right-click, exponential smoothing to reduce jitter, and voice typing via Google Speech Recognition — all configurable through a single config file.",
+            tech: ["Python", "MediaPipe", "OpenCV", "PyAutoGUI", "SpeechRecognition", "Tkinter"],
+            link: "#"
+        },
+        {
+            title: "MultilingualAI",
+            description: "A desktop AI application providing low-latency speech-to-speech translation across English, Hindi, and Tamil — preserving emotional nuance and cultural context. Features real-time speech recognition via OpenAI Whisper, neural translation using Helsinki-NLP MarianMT, emotion-aware TTS with Edge-TTS, multilingual sentiment analysis, and a 30+ idiom cultural mapping engine.",
+            tech: ["Python", "OpenAI Whisper", "MarianMT", "Edge-TTS", "CustomTkinter", "BERT"],
             link: "#"
         }
     ],
