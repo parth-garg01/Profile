@@ -1,7 +1,7 @@
 import React, { useEffect, useRef } from 'react';
 import { motion } from 'framer-motion';
 import { profileData } from '../data';
-import { Github, ExternalLink } from 'lucide-react';
+
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 
@@ -71,14 +71,7 @@ const Projects = ({ className }) => {
                                         </span>
                                     ))}
                                 </div>
-                                <div className="flex gap-4 mt-auto">
-                                    <a href={project.link} className="flex items-center gap-2 text-white hover:text-accent transition-colors">
-                                        <Github size={18} /> <span className="text-xs font-bold">Code</span>
-                                    </a>
-                                    <a href={project.link} className="flex items-center gap-2 text-white hover:text-accent transition-colors">
-                                        <ExternalLink size={18} /> <span className="text-xs font-bold">Demo</span>
-                                    </a>
-                                </div>
+
                             </div>
                         </motion.div>
                     ))}
