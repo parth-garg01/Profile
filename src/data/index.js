@@ -114,6 +114,18 @@ export const profileData = {
         { name: "Arduino", category: "Technical" },
     ],
     projects: [
+         {
+            title: "GazePoint",
+            description: "Control your computer cursor using only your eyes. GazePoint uses real-time iris tracking via MediaPipe to move the mouse with head-independent normalization and 4-point full-screen calibration. Supports double-blink left-click, long-blink right-click, exponential smoothing to reduce jitter, and voice typing via Google Speech Recognition — all configurable through a single config file.",
+            tech: ["Python", "MediaPipe", "OpenCV", "PyAutoGUI", "SpeechRecognition", "Tkinter"],
+            link: "#"
+        },
+         {
+            title: "MultilingualAI",
+            description: "A desktop AI application providing low-latency speech-to-speech translation across English, Hindi, and Tamil — preserving emotional nuance and cultural context. Features real-time speech recognition via OpenAI Whisper, neural translation using Helsinki-NLP MarianMT, emotion-aware TTS with Edge-TTS, multilingual sentiment analysis, and a 30+ idiom cultural mapping engine.",
+            tech: ["Python", "OpenAI Whisper", "MarianMT", "Edge-TTS", "CustomTkinter", "BERT"],
+            link: "#"
+        },
         {
             title: "Blind Aid System",
             description: "Award-winning project at Code2Create Hackathon. A system designed to assist visually impaired individuals using ultrasonic sensors and voice feedback.",
@@ -143,19 +155,9 @@ export const profileData = {
             description: "A modern, high-performance portfolio website with glassmorphism and stacked transitions. Built with React and Vite.",
             tech: ["React", "Tailwind CSS", "Framer Motion"],
             link: "#"
-        },
-        {
-            title: "GazePoint",
-            description: "Control your computer cursor using only your eyes. GazePoint uses real-time iris tracking via MediaPipe to move the mouse with head-independent normalization and 4-point full-screen calibration. Supports double-blink left-click, long-blink right-click, exponential smoothing to reduce jitter, and voice typing via Google Speech Recognition — all configurable through a single config file.",
-            tech: ["Python", "MediaPipe", "OpenCV", "PyAutoGUI", "SpeechRecognition", "Tkinter"],
-            link: "#"
-        },
-        {
-            title: "MultilingualAI",
-            description: "A desktop AI application providing low-latency speech-to-speech translation across English, Hindi, and Tamil — preserving emotional nuance and cultural context. Features real-time speech recognition via OpenAI Whisper, neural translation using Helsinki-NLP MarianMT, emotion-aware TTS with Edge-TTS, multilingual sentiment analysis, and a 30+ idiom cultural mapping engine.",
-            tech: ["Python", "OpenAI Whisper", "MarianMT", "Edge-TTS", "CustomTkinter", "BERT"],
-            link: "#"
         }
+       
+       
     ],
     hobbies: [
         { name: "Coding", icon: "Code" },
