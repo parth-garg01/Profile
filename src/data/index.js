@@ -126,10 +126,17 @@ export const profileData = {
             tech: ["Python", "OpenAI Whisper", "MarianMT", "Edge-TTS", "CustomTkinter", "BERT"],
             link: "#"
         },
+        
         {
             title: "Blind Aid System",
             description: "Award-winning project at Code2Create Hackathon. A system designed to assist visually impaired individuals using ultrasonic sensors and voice feedback.",
             tech: ["IoT", "Python", "Sensors", "Arduino"],
+            link: "#"
+        },
+        {
+            title: "Task Submission Portal",
+            description: "I built a full-stack TAM Research Cycle portal where members sign in with Google, complete their profiles, and submit weekly research progress updates. I also developed an admin dashboard to track submissions, add remarks, and send reminder emails from one centralized system.",
+            tech: ["HTML", "MongoDB", "React", "Material UI", "Next.js", "Nodemailer"],
             link: "#"
         },
         {
@@ -167,7 +174,6 @@ export const profileData = {
         { name: "Public Speaking", icon: "Mic" },
         { name: "Robotics", icon: "Bot" },
         { name: "Chess", icon: "Gamepad2" },
-        { name: "Reading", icon: "Book" },
-        { name: "Travel", icon: "Map" }
+        { name: "Reading", icon: "Book" }
     ]
 };
