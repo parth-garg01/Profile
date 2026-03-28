@@ -118,32 +118,32 @@ export const profileData = {
             title: "GazePoint",
             description: "Control your computer cursor using only your eyes. GazePoint uses real-time iris tracking via MediaPipe to move the mouse with head-independent normalization and 4-point full-screen calibration. Supports double-blink left-click, long-blink right-click, exponential smoothing to reduce jitter, and voice typing via Google Speech Recognition — all configurable through a single config file.",
             tech: ["Python", "MediaPipe", "OpenCV", "PyAutoGUI", "SpeechRecognition", "Tkinter"],
-            link: "#"
+            link: "https://github.com/parth-garg01/GazePoint"
         },
          {
             title: "MultilingualAI",
             description: "A desktop AI application providing low-latency speech-to-speech translation across English, Hindi, and Tamil — preserving emotional nuance and cultural context. Features real-time speech recognition via OpenAI Whisper, neural translation using Helsinki-NLP MarianMT, emotion-aware TTS with Edge-TTS, multilingual sentiment analysis, and a 30+ idiom cultural mapping engine.",
             tech: ["Python", "OpenAI Whisper", "MarianMT", "Edge-TTS", "CustomTkinter", "BERT"],
-            link: "#"
+            link: "https://github.com/parth-garg01/MultilingualAI"
         },
         
         {
             title: "Blind Aid System",
-            description: "Award-winning project at Code2Create Hackathon. A system designed to assist visually impaired individuals using ultrasonic sensors and voice feedback.",
-            tech: ["IoT", "Python", "Sensors", "Arduino"],
+            description: "Award-winning project at Code2Create Hackathon. A system designed to assist visually impaired individuals using ultrasonic sensors and voice feedback. This project has also submitted to the Indian Patent Office and has been Published.",
+            tech: ["IoT", "Python", "Machine Learning", "RaspberryPi"],
             link: "#"
         },
         {
             title: "Task Submission Portal",
             description: "I built a full-stack TAM Research Cycle portal where members sign in with Google, complete their profiles, and submit weekly research progress updates. I also developed an admin dashboard to track submissions, add remarks, and send reminder emails from one centralized system.",
             tech: ["HTML", "MongoDB", "React", "Material UI", "Next.js", "Nodemailer"],
-            link: "#"
+            link: "https://github.com/parth-garg01/TAM-ResearchCycle-TaskSubmission-Portal"
         },
         {
             title: "MyTuneVault ",
             description: "Created a clone of the Spotify interface and added all the songs from my playlist. It allows me to listen to music without any ad breaks.",
-            tech: ["React", "JavaScript", "CSS", "HTML"],
-            link: "#"
+            tech: ["React", "JavaScript", "CSS", "HTML", "Supabase"],
+            link: "https://github.com/parth-garg01/MyTuneVault"
         },
         {
             title: "Thermal DDoS Detector",
@@ -155,13 +155,13 @@ export const profileData = {
             title: "Government Workflow Optimizer",
             description: "A machine learning-based system that predicts government file processing times and identifies delay risks. Features synthetic data generation, ML models for regression and classification, and an interactive Streamlit dashboard for workflow optimization.",
             tech: ["Streamlit", "Scikit-learn", "LightGBM", "Plotly", "Pandas"],
-            link: "#"
+            link: "https://github.com/parth-garg01/gov-workflow-optimizer"
         },
         {
             title: "Portfolio Website",
             description: "A modern, high-performance portfolio website with glassmorphism and stacked transitions. Built with React and Vite.",
             tech: ["React", "Tailwind CSS", "Framer Motion"],
-            link: "#"
+            link: "https://github.com/parth-garg01/Profile"
         }
        
        
