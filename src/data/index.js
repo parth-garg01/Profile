@@ -156,12 +156,6 @@ export const profileData = {
             description: "A machine learning-based system that predicts government file processing times and identifies delay risks. Features synthetic data generation, ML models for regression and classification, and an interactive Streamlit dashboard for workflow optimization.",
             tech: ["Streamlit", "Scikit-learn", "LightGBM", "Plotly", "Pandas"],
             link: "https://github.com/parth-garg01/gov-workflow-optimizer"
-        },
-        {
-            title: "Portfolio Website",
-            description: "A modern, high-performance portfolio website with glassmorphism and stacked transitions. Built with React and Vite.",
-            tech: ["React", "Tailwind CSS", "Framer Motion"],
-            link: "https://github.com/parth-garg01/Profile"
         }
        
        
