@@ -128,7 +128,7 @@ export const profileData = {
         },
         
         {
-            title: "Blind Aid System",
+            title: "BlindSpot",
             description: "Award-winning project at Code2Create Hackathon. A system designed to assist visually impaired individuals using ultrasonic sensors and voice feedback. This project has also submitted to the Indian Patent Office and has been Published.",
             tech: ["IoT", "Python", "Machine Learning", "RaspberryPi"],
             link: "#"
