@@ -72,6 +72,17 @@ const About = ({ className }) => {
                     <p className="about-text font-sans text-secondary text-lg leading-relaxed">
                         {profileData.about}
                     </p>
+
+                    <div className="mt-6 flex justify-center">
+                        <a
+                            href={encodeURI('/Resume - Parth.pdf')}
+                            download
+                            aria-label="Download Parth Garg's Resume"
+                            className="flex items-center justify-center gap-3 bg-accent text-primary font-bold px-8 py-4 rounded-xl hover:opacity-90 transition"
+                        >
+                            Download Resume
+                        </a>
+                    </div>
                 </motion.div>
             </div>
         </section>
