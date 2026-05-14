@@ -126,12 +126,17 @@ export const profileData = {
             tech: ["Python", "OpenAI Whisper", "MarianMT", "Edge-TTS", "CustomTkinter", "BERT"],
             link: "https://github.com/parth-garg01/MultilingualAI"
         },
-        
         {
             title: "BlindSpot",
             description: "Award-winning project at Code2Create Hackathon. A system designed to assist visually impaired individuals using ultrasonic sensors and voice feedback. This project has also submitted to the Indian Patent Office and has been Published.",
             tech: ["IoT", "Python", "Machine Learning", "RaspberryPi"],
             link: "#"
+        },
+        {
+            title: "FocusLock",
+            description: "FocusLock is an Android distraction blocker built in Kotlin. It lets you select apps, start a timed focus session, block selected apps with an overlay, and optionally cancel notifications from those apps while the session is active.",
+            tech: ["Kotlin", "AndroidSDK"],
+            link: "https://github.com/parth-garg01/FocusLock"
         },
         {
             title: "Task Submission Portal",
