@@ -31,7 +31,7 @@ export const profileData = {
     ],
     journey: [
         {
-            year: "2025 - Present",
+            year: "March 2025 - Present",
             role: "Reseach and Development Head",
             company: "TAM-VIT",
             description: "Organised various workshops and contributed to technical events.",
@@ -45,7 +45,7 @@ export const profileData = {
             tech: ["Python", "Pandas", "MatplotLib", "Data Visualization", "Algorithmic Trading"],
         },
         {
-            year: "2024 - 2028",
+            year: "July 2024 - May 2028 (Expected)",
             role: "B.Tech in Computer Science",
             company: "Vellore Institute of Technology",
             description: "Pursuing undergraduate studies with a focus on software development, data structures, algorithms, and machine learning. Engaged in various projects and hackathons to apply theoretical knowledge practically.",
@@ -125,6 +125,12 @@ export const profileData = {
             description: "A desktop AI application providing low-latency speech-to-speech translation across English, Hindi, and Tamil — preserving emotional nuance and cultural context. Features real-time speech recognition via OpenAI Whisper, neural translation using Helsinki-NLP MarianMT, emotion-aware TTS with Edge-TTS, multilingual sentiment analysis, and a 30+ idiom cultural mapping engine.",
             tech: ["Python", "OpenAI Whisper", "MarianMT", "Edge-TTS", "CustomTkinter", "BERT"],
             link: "https://github.com/parth-garg01/MultilingualAI"
+        },
+        {
+            title: "Sentinel",
+            description: "Sentinel is a privacy-first emergency reporting system disguised as a calculator app. The current prototype is Android-first and focused on secure evidence capture, offline-first persistence, and delayed encrypted upload.",
+            tech: ["Dart", "JavaScript", "CSS", "HTML"],
+            link: "https://github.com/parth-garg01/Sentinel"
         },
         {
             title: "BlindSpot",
