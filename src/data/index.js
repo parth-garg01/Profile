@@ -31,6 +31,20 @@ export const profileData = {
     ],
     journey: [
         {
+            year: "July 2024 - May 2028 (Expected)",
+            role: "B.Tech in Computer Science",
+            company: "Vellore Institute of Technology",
+            description: "Pursuing undergraduate studies with a focus on software development, data structures, algorithms, and machine learning. Engaged in various projects and hackathons to apply theoretical knowledge practically.",
+            tech: ["Computer Science", "Engineering"],
+        },
+         {
+            year: "May 2026 - June 2026",
+            role: "Product Manager Intern",
+            company: "BAMKO",
+            description: "Worked on real world SAAS Project. Created a QMS dialer for call centers.",
+            tech: ["HTML", "Tailwind CSS", "React"],
+        },
+        {
             year: "March 2025 - Present",
             role: "Reseach and Development Head",
             company: "TAM-VIT",
@@ -44,13 +58,7 @@ export const profileData = {
             description: "Analyzed trading strategies (Iron Condor, etc.) and developed data-driven insights using Python. Automated report generation reducing 2 hours of manual work daily.",
             tech: ["Python", "Pandas", "MatplotLib", "Data Visualization", "Algorithmic Trading"],
         },
-        {
-            year: "July 2024 - May 2028 (Expected)",
-            role: "B.Tech in Computer Science",
-            company: "Vellore Institute of Technology",
-            description: "Pursuing undergraduate studies with a focus on software development, data structures, algorithms, and machine learning. Engaged in various projects and hackathons to apply theoretical knowledge practically.",
-            tech: ["Computer Science", "Engineering"],
-        },
+        
     ],
     // Merged & Filtered Technical Credentials (Sorted by Year Descending)
     achievements: [
