@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom/client';
 import '@fontsource-variable/anybody/standard.css';
 import '@fontsource-variable/instrument-sans/wdth.css';
 import '@fontsource/instrument-serif/latin-400.css';
+import '@fontsource/instrument-serif/latin-400-italic.css';
 import './index.css';
 import App from './App.jsx';
 

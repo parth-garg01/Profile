@@ -43,7 +43,7 @@ export default function Contact() {
       <section id="contact" className="on-light bg-sun text-ink" aria-labelledby="contact-title">
         <div className="page grid gap-12 py-24 md:py-32 lg:grid-cols-12 lg:py-40">
           <div className="lg:col-span-6">
-            <RevealHeading id="contact-title" className="display text-poster uppercase" style={{ '--wdth': 80, '--wght': 900 }}>
+            <RevealHeading id="contact-title" className="t-poster text-[clamp(96px,15vw,240px)]">
               Say hello.
             </RevealHeading>
             <Reveal>

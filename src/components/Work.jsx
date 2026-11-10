@@ -19,8 +19,8 @@ function Panel({ p, flip }) {
     >
       <div className="page grid items-center gap-12 pb-24 pt-16 md:pb-32 md:pt-24 lg:grid-cols-12 lg:gap-10">
         <Reveal className={cx('lg:col-span-5', flip && 'lg:order-2 lg:col-start-8')}>
-          <p className="meta">{p.kicker}</p>
-          <h3 className="h-section mt-3">{p.name}</h3>
+          <p className="t-serif-i text-[clamp(22px,1.9vw,28px)] leading-tight">{p.kicker}</p>
+          <h3 className="t-wide mt-3 text-[clamp(40px,4.3vw,70px)]">{p.name}</h3>
           <p className="mt-6 text-lead">{p.summary}</p>
           <p className="mt-4 text-body">{p.detail}</p>
           <dl className="mt-8 grid gap-3 border-t-2 border-ink/15 pt-6">
@@ -53,7 +53,7 @@ export default function Work() {
     <section id="work" aria-labelledby="work-title">
       <div className="on-light bg-mint text-ink">
         <div className="page pb-28 pt-20 md:pb-36 md:pt-28">
-        <RevealHeading id="work-title" className="h-section max-w-[14ch]">
+        <RevealHeading id="work-title" className="t-poster max-w-[12ch] text-[clamp(64px,9.5vw,156px)]">
           Three projects I’d walk you through
         </RevealHeading>
         </div>

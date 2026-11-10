@@ -67,6 +67,47 @@
     letter-spacing: -0.01em;
   }
 
+  /* Three voices. Poster: Anybody at its narrowest, in capitals. Wide: Anybody stretched out.
+     Serif: Instrument Serif, upright or italic, for anything that reads as a sentence. */
+  .t-poster {
+    @apply font-display uppercase;
+    --wdth: 52;
+    --wght: 900;
+    font-variation-settings: 'wdth' var(--wdth), 'wght' var(--wght);
+    font-weight: 900;
+    line-height: 0.86;
+    letter-spacing: -0.005em;
+  }
+
+  /* Smaller poster text needs more width and air to stay readable. */
+  .t-poster-sm {
+    @apply t-poster;
+    --wdth: 74;
+    line-height: 0.95;
+    letter-spacing: 0.01em;
+  }
+
+  .t-wide {
+    @apply font-display;
+    --wdth: 140;
+    --wght: 760;
+    font-variation-settings: 'wdth' var(--wdth), 'wght' var(--wght);
+    font-weight: 760;
+    line-height: 0.98;
+    letter-spacing: -0.035em;
+  }
+
+  .t-serif {
+    @apply font-serif;
+    font-weight: 400;
+    line-height: 1.02;
+    letter-spacing: -0.015em;
+  }
+
+  .t-serif-i {
+    @apply t-serif italic;
+  }
+
   .meta {
     @apply text-small font-semibold;
   }

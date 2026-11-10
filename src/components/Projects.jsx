@@ -20,7 +20,7 @@ function Row({ p }) {
           style={{ background: cat.color }}
         />
         <span className="relative transition-colors duration-300 group-hover:text-ink group-focus-visible:text-ink">
-          <span className="display block text-[clamp(26px,2.6vw,38px)] leading-[1.02]" style={{ '--wdth': 92 }}>
+          <span className="t-poster-sm block text-[clamp(28px,2.7vw,42px)]">
             {p.name}
           </span>
           {p.team && <span className="mt-2 block text-small text-mist transition-colors duration-300 group-hover:text-ink/75">Team project</span>}
@@ -86,7 +86,7 @@ export default function Projects() {
   return (
     <section id="projects" className="section" aria-labelledby="projects-title">
       <div className="page">
-        <RevealHeading id="projects-title" className="h-section">
+        <RevealHeading id="projects-title" className="t-wide text-[clamp(40px,5.2vw,84px)]">
           More things I’ve built
         </RevealHeading>
 
