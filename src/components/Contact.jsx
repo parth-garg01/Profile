@@ -1,102 +1,79 @@
-import React, { useEffect, useRef } from 'react';
-import { motion } from 'framer-motion';
-import { profileData } from '../data';
-import { Mail, Linkedin, Github } from 'lucide-react';
-import gsap from 'gsap';
-import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import React, { useState } from 'react';
+import { ArrowUpRight, Check, Copy, Download, Mail } from 'lucide-react';
+import { contact, profile } from '../data';
+import { Reveal, RevealHeading } from '../lib/motion.jsx';
 
-gsap.registerPlugin(ScrollTrigger);
+function Channel({ label, value, href, download, external }) {
+  const Icon = download ? Download : external ? ArrowUpRight : Mail;
+  return (
+    <li>
+      <a
+        href={href}
+        {...(external ? { target: '_blank', rel: 'noopener noreferrer' } : {})}
+        {...(download ? { download: '' } : {})}
+        className="group relative flex min-h-[76px] items-center justify-between gap-4 overflow-hidden rounded-full bg-ink px-7 text-cream"
+      >
+        <span aria-hidden="true" className="absolute inset-0 origin-left scale-x-0 bg-cream transition-transform duration-[650ms] ease-soft group-hover:scale-x-100" />
+        <span className="relative flex min-w-0 flex-col transition-colors duration-300 group-hover:text-ink sm:flex-row sm:items-baseline sm:gap-4">
+          <span className="text-small text-mist transition-colors duration-300 group-hover:text-ink/70">{label}</span>
+          <span className="truncate text-[18px] font-semibold">{value}</span>
+        </span>
+        <Icon className="relative shrink-0 transition-all duration-500 ease-soft group-hover:-translate-y-0.5 group-hover:translate-x-0.5 group-hover:text-ink" size={22} aria-hidden="true" />
+        {external && <span className="sr-only"> (opens in a new tab)</span>}
+      </a>
+    </li>
+  );
+}
 
-const Contact = ({ className }) => {
-    const sectionRef = useRef(null);
+export default function Contact() {
+  const c = profile.contact;
+  const [copied, setCopied] = useState(false);
+  const copy = async () => {
+    try {
+      await navigator.clipboard.writeText(c.email);
+      setCopied(true);
+      setTimeout(() => setCopied(false), 1800);
+    } catch {
+      /* clipboard unavailable */
+    }
+  };
 
-    useEffect(() => {
-        const ctx = gsap.context(() => {
-            gsap.from('.contact-heading', {
-                y: 30,
-                opacity: 0,
-                duration: 0.8,
-                ease: 'power3.out',
-                scrollTrigger: {
-                    trigger: sectionRef.current,
-                    start: 'top 80%',
-                    toggleActions: 'play none none none',
-                },
-            });
-            gsap.from('.contact-line', {
-                scaleX: 0,
-                duration: 1,
-                ease: 'power3.out',
-                scrollTrigger: {
-                    trigger: sectionRef.current,
-                    start: 'top 80%',
-                    toggleActions: 'play none none none',
-                },
-            });
-        }, sectionRef);
-
-        return () => ctx.revert();
-    }, []);
-
-    return (
-        <section ref={sectionRef} id="contact" className={`py-24 bg-primary overflow-hidden ${className}`}>
-            {/* Background Gradient */}
-            <div className="absolute inset-0 bg-gradient-to-t from-[#020215] to-primary z-0"></div>
-
-            <div className="max-w-4xl mx-auto px-6 relative z-10 w-full text-center">
-                {/* Animated heading above the card */}
-                <div className="mb-12">
-                    <h2 className="contact-heading font-display text-4xl font-bold text-white mb-2">
-                        LET'S <span className="text-accent">CONNECT</span>
-                    </h2>
-                    <div className="contact-line w-16 h-1 bg-accent mx-auto origin-center"></div>
-                </div>
-
-                <motion.div
-                    initial={{ opacity: 0, y: 40 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    viewport={{ once: true }}
-                    transition={{ duration: 0.7, delay: 0.2 }}
-                    className="bg-[#050515] border border-white/10 p-12 rounded-3xl"
-                >
-                    <p className="text-xl text-secondary mb-12 max-w-2xl mx-auto">
-                        Whether you have a project in mind, a question about my work, or just want to say hi, I'm always open to discussing new opportunities.
-                    </p>
-
-                    <div className="flex flex-col md:flex-row justify-center gap-6 mb-12">
-                        <motion.a
-                            href={`mailto:${profileData.contact.email}`}
-                            whileHover={{ scale: 1.05 }}
-                            whileTap={{ scale: 0.97 }}
-                            className="flex items-center justify-center gap-3 bg-accent text-primary font-bold px-8 py-4 rounded-xl hover:bg-white transition-colors"
-                        >
-                            <Mail size={20} /> Say Hello
-                        </motion.a>
-                        <div className="flex justify-center gap-4">
-                            <motion.a
-                                href={profileData.contact.linkedin}
-                                whileHover={{ scale: 1.1, borderColor: 'rgba(139,92,246,0.6)' }}
-                                className="p-4 bg-white/5 border border-white/10 rounded-xl hover:bg-white/10 hover:text-accent transition-colors text-white"
-                            >
-                                <Linkedin size={24} />
-                            </motion.a>
-                            <motion.a
-                                href={profileData.contact.github}
-                                whileHover={{ scale: 1.1, borderColor: 'rgba(139,92,246,0.6)' }}
-                                className="p-4 bg-white/5 border border-white/10 rounded-xl hover:bg-white/10 hover:text-accent transition-colors text-white"
-                            >
-                                <Github size={24} />
-                            </motion.a>
-                        </div>
-                    </div>
-
-                    <p className="text-white/30 text-sm font-mono">
-                        &copy; {new Date().getFullYear()} Parth Garg. Built with React &amp; Vite.
-                    </p>
-                </motion.div>
-            </div>
-        </section>
-    );
-};
-
-export default Contact;
+  return (
+    <>
+      <section id="contact" className="on-light bg-sun text-ink" aria-labelledby="contact-title">
+        <div className="page grid gap-12 py-24 md:py-32 lg:grid-cols-12 lg:py-40">
+          <div className="lg:col-span-6">
+            <RevealHeading id="contact-title" className="display text-poster uppercase" style={{ '--wdth': 80, '--wght': 900 }}>
+              Say hello.
+            </RevealHeading>
+            <Reveal>
+              <p className="mt-8 max-w-read text-lead">{contact.lead}</p>
+              <button
+                type="button"
+                onClick={copy}
+                className="mt-6 inline-flex h-12 items-center gap-2 rounded-full border-2 border-ink px-5 font-semibold transition-colors duration-300 hover:bg-ink hover:text-sun"
+              >
+                {copied ? <Check size={18} aria-hidden="true" /> : <Copy size={18} aria-hidden="true" />}
+                {copied ? 'Email copied' : 'Copy email address'}
+              </button>
+              <span className="sr-only" aria-live="polite">{copied ? 'Email address copied.' : ''}</span>
+            </Reveal>
+          </div>
+          <Reveal as="ul" className="grid content-end gap-3 lg:col-span-6" stagger={0.07}>
+            <Channel label="Email" value={c.email} href={`mailto:${c.email}`} />
+            <Channel label="GitHub" value={c.githubLabel} href={c.github} external />
+            <Channel label="LinkedIn" value={c.linkedinLabel} href={c.linkedin} external />
+            <Channel label="Google Scholar" value="Parth Garg" href={c.scholar} external />
+            <Channel label="Resume" value="Download PDF" href={profile.resume} download />
+          </Reveal>
+        </div>
+      </section>
+      <footer className="bg-ink text-mist">
+        <div className="page flex flex-wrap items-center justify-between gap-3 py-6 text-small">
+          <p>© 2026 {profile.name}</p>
+          <p>Last updated {profile.lastUpdated}</p>
+        </div>
+      </footer>
+    </>
+  );
+}
