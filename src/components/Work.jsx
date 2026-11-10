@@ -9,12 +9,12 @@ const DEMOS = {
   bisection: lazy(() => import('./work/BisectionDemo')),
 };
 
-function Panel({ p, flip }) {
+function Panel({ p, flip, last }) {
   const Demo = DEMOS[p.visual];
   return (
     <article
       id={p.slug}
-      className="on-light relative mx-3 -mt-12 scroll-mt-16 rounded-t-[40px] sm:mx-5 lg:mx-8 xl:mx-12 text-ink shadow-[0_-24px_48px_-24px_rgba(13,18,64,0.35)] md:-mt-16 md:rounded-t-[64px]"
+      className={`on-light relative mx-3 -mt-12 scroll-mt-16 rounded-t-[40px] sm:mx-5 lg:mx-8 xl:mx-12 text-ink shadow-[0_-24px_48px_-24px_rgba(13,18,64,0.35)] md:-mt-16 md:rounded-t-[64px]${last ? ' rounded-b-[40px] md:rounded-b-[64px]' : ''}`}
       style={{ background: p.color }}
     >
       <div className="page grid items-center gap-12 pb-24 pt-16 md:pb-32 md:pt-24 lg:grid-cols-12 lg:gap-10">
@@ -50,7 +50,7 @@ function Panel({ p, flip }) {
 
 export default function Work() {
   return (
-    <section id="work" className="bg-mint" aria-labelledby="work-title">
+    <section id="work" className="bg-mint pb-24 md:pb-32" aria-labelledby="work-title">
       <div className="on-light bg-mint text-ink">
         <div className="page pb-28 pt-20 md:pb-36 md:pt-28">
         <RevealHeading id="work-title" className="t-wide max-w-[16ch] text-[clamp(44px,6vw,100px)]">
@@ -59,7 +59,7 @@ export default function Work() {
         </div>
       </div>
       {featured.map((p, i) => (
-        <Panel key={p.slug} p={p} flip={i % 2 === 1} />
+        <Panel key={p.slug} p={p} flip={i % 2 === 1} last={i === featured.length - 1} />
       ))}
     </section>
   );
