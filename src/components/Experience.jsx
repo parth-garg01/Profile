@@ -1,75 +1,80 @@
 import React from 'react';
-import { motion } from 'framer-motion';
-import { Briefcase } from 'lucide-react';
-import { profileData } from '../data';
+import { experience, recognition, toolkit } from '../data';
+import { Reveal, RevealHeading } from '../lib/motion.jsx';
 
-const Experience = () => {
-    return (
-        <section id="experience" className="py-20 bg-transparent relative">
-            <div className="max-w-6xl mx-auto px-6">
-                <motion.div
-                    initial={{ opacity: 0 }}
-                    whileInView={{ opacity: 1 }}
-                    viewport={{ once: true }}
-                    className="text-center mb-16"
-                >
-                    <h2 className="font-display text-4xl font-bold text-white mb-4">EXPERIENCE</h2>
-                    <div className="w-16 h-1 bg-accent mx-auto"></div>
-                </motion.div>
+export function Experience() {
+  return (
+    <section id="experience" className="on-light section bg-cream text-ink" aria-labelledby="exp-title">
+      <div className="page">
+        <RevealHeading id="exp-title" className="h-section">
+          Where I’ve worked
+        </RevealHeading>
+        <Reveal as="ol" className="mt-14 border-b-2 border-ink/15" stagger={0.12}>
+          {experience.map((e) => (
+            <li key={e.org} className="grid gap-4 border-t-2 border-ink/15 py-10 md:grid-cols-12 md:gap-8">
+              <div className="md:col-span-3">
+                <p className="font-semibold">{e.dates}</p>
+                <p className="text-small opacity-70">{e.place}</p>
+              </div>
+              <div className="md:col-span-4">
+                <h3 className="h-title">{e.org}</h3>
+                <p className="mt-2 text-lead">{e.role}</p>
+              </div>
+              <ul className="grid gap-3 md:col-span-5">
+                {e.points.map((pt) => (
+                  <li key={pt.slice(0, 24)} className="grid grid-cols-[14px_1fr] gap-3 text-body">
+                    <span aria-hidden="true" className="mt-[0.6em] h-2 w-2 rounded-full bg-coral" />
+                    {pt}
+                  </li>
+                ))}
+              </ul>
+            </li>
+          ))}
+        </Reveal>
+      </div>
+    </section>
+  );
+}
 
-                <div className="space-y-12 relative">
-                    {/* Vertical Line */}
-                    <div className="absolute left-0 md:left-1/2 top-0 bottom-0 w-px bg-white/10 transform -translate-x-1/2 hidden md:block"></div>
-
-                    {profileData.experience.map((exp, index) => (
-                        <motion.div
-                            key={index}
-                            initial={{ opacity: 0, y: 50 }}
-                            whileInView={{ opacity: 1, y: 0 }}
-                            transition={{ duration: 0.5, delay: index * 0.1 }}
-                            viewport={{ once: true }}
-                            className={`flex flex-col md:flex-row gap-8 items-center ${index % 2 === 0 ? '' : 'md:flex-row-reverse'}`}
-                        >
-                            <div className="flex-1 w-full text-left md:text-right">
-                                {index % 2 === 0 ? (
-                                    <div className="md:pr-12 group">
-                                        <h3 className="text-2xl font-bold text-white group-hover:text-accent transition-colors">{exp.role}</h3>
-                                        <h4 className="text-xl text-secondary font-mono mb-2">{exp.company}</h4>
-                                        <p className="text-secondary/80 text-sm leading-relaxed">{exp.description}</p>
-                                    </div>
-                                ) : (
-                                    <div className="md:pl-12 text-left md:text-left">
-                                        <span className="font-mono text-accent text-sm border border-accent/30 px-3 py-1 rounded mb-4 inline-block">{exp.period}</span>
-                                    </div>
-                                )}
-                            </div>
-
-                            {/* Icon */}
-                            <div className="z-10 bg-primary border-4 border-primary rounded-full">
-                                <div className="w-12 h-12 bg-white/5 backdrop-blur-md border border-accent rounded-full flex items-center justify-center text-accent shadow-[0_0_15px_rgba(230,179,92,0.3)]">
-                                    <Briefcase size={20} />
-                                </div>
-                            </div>
-
-                            <div className="flex-1 w-full text-left">
-                                {index % 2 === 0 ? (
-                                    <div className="md:pl-12">
-                                        <span className="font-mono text-accent text-sm border border-accent/30 px-3 py-1 rounded mb-4 inline-block">{exp.period}</span>
-                                    </div>
-                                ) : (
-                                    <div className="md:pr-12 group md:text-right text-left">
-                                        <h3 className="text-2xl font-bold text-white group-hover:text-accent transition-colors">{exp.role}</h3>
-                                        <h4 className="text-xl text-secondary font-mono mb-2">{exp.company}</h4>
-                                        <p className="text-secondary/80 text-sm leading-relaxed">{exp.description}</p>
-                                    </div>
-                                )}
-                            </div>
-                        </motion.div>
-                    ))}
+export function Recognition() {
+  return (
+    <section id="recognition" className="section" aria-labelledby="rec-title">
+      <div className="page grid gap-16 lg:grid-cols-12 lg:gap-10">
+        <div className="lg:col-span-7">
+          <RevealHeading id="rec-title" className="h-section">
+            Recognition
+          </RevealHeading>
+          <Reveal as="ul" className="mt-12 grid gap-4">
+            {recognition.map((r, i) => (
+              <li
+                key={r.title}
+                className={i === 0 ? 'on-light rounded-[28px] bg-coral p-8 text-ink md:p-10' : 'rounded-[28px] border-2 border-cream/20 p-8 md:p-10'}
+              >
+                <div className="flex flex-wrap items-baseline justify-between gap-3">
+                  <p className="meta">{r.where}</p>
+                  <p className="meta">{r.year}</p>
                 </div>
-            </div>
-        </section>
-    );
-};
+                <h3 className={i === 0 ? 'h-title mt-4 text-[clamp(34px,4vw,60px)]' : 'h-title mt-4'}>{r.title}</h3>
+                {r.note && <p className={i === 0 ? 'mt-3 text-body' : 'mt-3 text-body text-mist'}>{r.note}</p>}
+              </li>
+            ))}
+          </Reveal>
+        </div>
 
-export default Experience;
+        <div className="lg:col-span-5">
+          <RevealHeading as="h2" className="h-section">
+            Toolkit
+          </RevealHeading>
+          <Reveal as="dl" className="mt-12 grid gap-7">
+            {toolkit.map(([k, v]) => (
+              <div key={k} className="border-t-2 border-cream/15 pt-5">
+                <dt className="font-semibold text-sun">{k}</dt>
+                <dd className="mt-2 text-body">{v}</dd>
+              </div>
+            ))}
+          </Reveal>
+        </div>
+      </div>
+    </section>
+  );
+}
