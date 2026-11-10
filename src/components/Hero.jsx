@@ -28,9 +28,9 @@ function IconLink({ href, label, Icon }) {
       rel="noopener noreferrer"
       aria-label={`${label} (opens in a new tab)`}
       title={label}
-      className="group relative inline-flex h-14 w-14 items-center justify-center overflow-hidden rounded-full border-2 border-ink text-ink transition-colors duration-500 ease-soft hover:text-cream"
+      className="group relative inline-flex h-14 w-14 items-center justify-center overflow-hidden rounded-full border-2 border-cream text-cream transition-colors duration-500 ease-soft hover:text-ink"
     >
-      <span aria-hidden="true" className="absolute inset-0 scale-0 rounded-full bg-ink transition-transform duration-500 ease-soft group-hover:scale-100" />
+      <span aria-hidden="true" className="absolute inset-0 scale-0 rounded-full bg-cream transition-transform duration-500 ease-soft group-hover:scale-100" />
       <Icon className="relative" size={22} aria-hidden="true" />
     </a>
   );
@@ -69,16 +69,16 @@ export default function Hero() {
 
   return (
     <section ref={root} id="top" data-scene className="scene flex min-h-[100svh] flex-col">
-      <div className="flex flex-1 flex-col justify-center bg-blue pb-8 pt-[calc(68px+2rem)] md:pb-10 md:pt-[calc(68px+2.5rem)]">
+      <div className="on-light flex flex-1 flex-col justify-center bg-sun pb-8 pt-[calc(68px+2rem)] md:pb-10 md:pt-[calc(68px+2.5rem)]">
         <div className="page">
           <h1 aria-label={profile.name} className="hero-name font-display uppercase tracking-[-0.03em]">
-            <NameLine text={profile.first} className="block text-cream" />
-            <NameLine text={profile.last} className="block text-sun" />
+            <NameLine text={profile.first} className="block text-ink" />
+            <NameLine text={profile.last} className="block text-blue" />
           </h1>
         </div>
       </div>
 
-      <div data-hero-band className="on-light bg-pink text-ink">
+      <div data-hero-band className="bg-blue text-cream">
         <div className="page grid gap-6 py-8 md:grid-cols-12 md:gap-10 md:py-10">
           <div className="md:col-span-5">
             <p data-hero-rise className="t-wide text-[clamp(24px,2.3vw,36px)]" style={{ '--wght': 560 }}>
@@ -93,8 +93,8 @@ export default function Hero() {
               {hero.lead}
             </p>
             <div data-hero-rise className="mt-6 flex flex-wrap gap-3">
-              <Button href="#work" tone="light">See my work</Button>
-              <Button href={profile.resume} variant="outline" tone="light" download>
+              <Button href="#work">See my work</Button>
+              <Button href={profile.resume} variant="outline" download>
                 Resume
               </Button>
               <IconLink href={profile.contact.github} label="GitHub" Icon={Github} />
