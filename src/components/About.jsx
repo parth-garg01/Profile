@@ -1,92 +1,31 @@
-import React, { useEffect, useRef } from 'react';
-import { motion } from 'framer-motion';
-import { profileData } from '../data';
-import gsap from 'gsap';
-import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import React from 'react';
+import { about } from '../data';
+import { Reveal, RevealHeading } from '../lib/motion.jsx';
 
-gsap.registerPlugin(ScrollTrigger);
+export default function About() {
+  return (
+    <section id="about" className="on-light section bg-cream text-ink">
+      <div className="page grid gap-14 lg:grid-cols-12 lg:gap-10">
+        <RevealHeading className="h-section lg:col-span-7">{about.statement}</RevealHeading>
 
-const About = ({ className }) => {
-    const sectionRef = useRef(null);
+        <Reveal className="grid content-start gap-5 text-lead lg:col-span-5 lg:pt-3">
+          {about.paragraphs.map((p) => (
+            <p key={p.slice(0, 20)}>{p}</p>
+          ))}
+        </Reveal>
 
-    useEffect(() => {
-        const ctx = gsap.context(() => {
-            gsap.from('.about-heading', {
-                y: 30,
-                opacity: 0,
-                duration: 0.8,
-                ease: 'power3.out',
-                scrollTrigger: {
-                    trigger: sectionRef.current,
-                    start: 'top 80%',
-                    toggleActions: 'play none none none',
-                },
-            });
-            gsap.from('.about-line', {
-                scaleX: 0,
-                duration: 1,
-                ease: 'power3.out',
-                scrollTrigger: {
-                    trigger: sectionRef.current,
-                    start: 'top 80%',
-                    toggleActions: 'play none none none',
-                },
-            });
-            gsap.from('.about-text', {
-                y: 20,
-                opacity: 0,
-                duration: 0.9,
-                delay: 0.2,
-                ease: 'power3.out',
-                scrollTrigger: {
-                    trigger: sectionRef.current,
-                    start: 'top 75%',
-                    toggleActions: 'play none none none',
-                },
-            });
-        }, sectionRef);
-
-        return () => ctx.revert();
-    }, []);
-
-    return (
-        <section ref={sectionRef} id="about" className={`py-20 bg-primary ${className}`}>
-            {/* Background Mesh Gradient */}
-            <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-accent/5 rounded-full blur-[120px] pointer-events-none"></div>
-
-            <div className="max-w-4xl mx-auto px-6 relative z-10 w-full text-center">
-                <div className="mb-10">
-                    <h2 className="about-heading font-display text-4xl font-bold text-white mb-2">
-                        ABOUT <span className="text-accent">ME</span>
-                    </h2>
-                    <div className="about-line w-16 h-1 bg-accent mx-auto origin-center"></div>
-                </div>
-
-                <motion.div
-                    initial={{ opacity: 0, y: 20 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    viewport={{ once: true }}
-                    transition={{ duration: 0.7, delay: 0.1 }}
-                    className="p-8 border border-white/5 bg-white/5 backdrop-blur-sm rounded-2xl"
-                >
-                    <p className="about-text font-sans text-secondary text-lg leading-relaxed">
-                        {profileData.about}
-                    </p>
-
-                    <div className="mt-6 flex justify-center">
-                        <a
-                            href={encodeURI('/Resume - Parth.pdf')}
-                            download
-                            aria-label="Download Parth Garg's Resume"
-                            className="flex items-center justify-center gap-3 bg-accent text-primary font-bold px-8 py-4 rounded-xl hover:opacity-90 transition"
-                        >
-                            Download Resume
-                        </a>
-                    </div>
-                </motion.div>
-            </div>
-        </section>
-    );
-};
-
-export default About;
+        <Reveal className="grid gap-5 md:grid-cols-2 lg:col-span-12 lg:grid-cols-12" y={56}>
+          <div className="rounded-[28px] bg-sun p-8 text-ink md:p-10 lg:col-span-7">
+            <p className="meta">Working on now</p>
+            <p className="display mt-4 text-[clamp(26px,2.6vw,40px)] leading-[1.08]" style={{ '--wdth': 90 }}>
+              {about.now}
+            </p>
+          </div>
+          <div className="flex items-end rounded-[28px] bg-coral p-8 md:p-10 lg:col-span-5">
+            <p className="text-lead">{about.outside}</p>
+          </div>
+        </Reveal>
+      </div>
+    </section>
+  );
+}
