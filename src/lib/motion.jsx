@@ -60,12 +60,21 @@ function markArrived(el) {
   st.subs.clear();
 }
 
+// How long each scene holds before the next slides in, as a fraction of the screen height.
+const HOLD = 0.35;
+
 /** Mount once (in App). Pins each scene, marks arrivals and hides scenes fully covered by the next. */
 export function useScenes() {
   useEffect(() => {
     const els = [...document.querySelectorAll('[data-scene]')];
     // A scene taller than the screen pins by its bottom edge, so all of it can be read first.
-    const fit = () => els.forEach((el) => (el.style.top = `${Math.min(0, window.innerHeight - el.offsetHeight)}px`));
+    // Then it holds still for a short stretch of scrolling (its bottom margin) before the next
+    // scene starts to slide over, so one hard flick doesn't throw the next section in at once.
+    const fit = () =>
+      els.forEach((el, i) => {
+        el.style.top = `${Math.min(0, window.innerHeight - el.offsetHeight)}px`;
+        if (i < els.length - 1) el.style.marginBottom = `${Math.round(window.innerHeight * HOLD)}px`;
+      });
     let raf = 0;
     const check = () => {
       raf = 0;
