@@ -1,7 +1,7 @@
 import React, { useLayoutEffect, useMemo, useRef, useState } from 'react';
 import { ArrowUpRight } from 'lucide-react';
 import { CATEGORIES, categoryById, projects } from '../data';
-import { gsap, prefersReducedMotion, RevealHeading } from '../lib/motion.jsx';
+import { gsap, prefersReducedMotion, RevealHeading, useOnceInView } from '../lib/motion.jsx';
 import { cx } from './ui';
 
 function Row({ p }) {
@@ -68,11 +68,27 @@ export default function Projects() {
     if (b) setPill({ left: b.offsetLeft, width: b.offsetWidth });
   }, [filter, all]);
 
-  // When the list changes, the rows ease in one after another.
+  // Rows are wiped in from the left, one after another, the same sweep as their hover:
+  // the first time the list is seen, and again whenever the filter or view changes.
+  const sweep = () =>
+    gsap.fromTo(
+      list.current.querySelectorAll('[data-row]'),
+      { clipPath: 'inset(0% 100% 0% 0%)' },
+      { clipPath: 'inset(0% 0% 0% 0%)', duration: 0.9, ease: 'power3.inOut', stagger: 0.05, clearProps: 'clipPath' },
+    );
+  const seen = useRef(false);
   useLayoutEffect(() => {
-    if (!animate.current || prefersReducedMotion()) return;
+    if (prefersReducedMotion()) return;
+    gsap.set(list.current.querySelectorAll('[data-row]'), { clipPath: 'inset(0% 100% 0% 0%)' });
+  }, []);
+  useOnceInView(list, () => {
+    seen.current = true;
+    if (!prefersReducedMotion()) sweep();
+  }, { amount: 0.1 });
+  useLayoutEffect(() => {
+    if (!animate.current || !seen.current || prefersReducedMotion()) return;
     animate.current = false;
-    gsap.fromTo(list.current.querySelectorAll('[data-row]'), { opacity: 0, y: 28 }, { opacity: 1, y: 0, duration: 0.8, ease: 'expo.out', stagger: 0.035, clearProps: 'transform' });
+    sweep();
   }, [filter, all]);
 
   const choose = (id) => {

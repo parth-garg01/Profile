@@ -70,12 +70,19 @@ export function useInView(ref, { amount = 0.35 } = {}) {
   return inView;
 }
 
+const radiusOf = (el) => parseFloat(getComputedStyle(el).borderTopLeftRadius) || 0;
+const fullClip = (r) => `inset(0% 0% 0% 0% round ${r}px)`;
+
 /**
- * Reveal: the direct children ease up 40 px and fade in, one after another, the first time the
- * group reaches the screen. Plays once.
+ * Reveal: plays once, the first time the group reaches the screen. Each mode borrows a shape
+ * the page already uses, so entrances read as part of the design rather than a generic fade-up.
+ *   fade  - the children simply come up in opacity, trailing the heading.
+ *   pill  - each child starts as a small pill (the button shape) and grows out to its own
+ *           corners; its contents arrive once it is open.
+ *   sweep - each child is wiped in from the left, the same sweep the hover states use.
  */
 export const Reveal = forwardRef(function Reveal(
-  { as: Tag = 'div', stagger = 0.09, delay = 0, y = 40, amount = 0.15, children, ...rest },
+  { as: Tag = 'div', mode = 'fade', stagger = 0.09, delay = 0, amount = 0.15, children, ...rest },
   outerRef,
 ) {
   const ref = useRef(null);
@@ -89,14 +96,37 @@ export const Reveal = forwardRef(function Reveal(
   useIsoLayoutEffect(() => {
     if (prefersReducedMotion() || !ref.current) return;
     armed.current = true;
-    gsap.set(ref.current.children, { opacity: 0, y });
+    const kids = [...ref.current.children];
+    if (mode === 'pill') {
+      kids.forEach((k) => {
+        gsap.set(k, { clipPath: 'inset(42% 34% 42% 34% round 999px)' });
+        gsap.set(k.children, { opacity: 0 });
+      });
+    } else if (mode === 'sweep') {
+      kids.forEach((k) => gsap.set(k, { clipPath: `inset(0% 100% 0% 0% round ${radiusOf(k)}px)` }));
+    } else {
+      gsap.set(kids, { opacity: 0 });
+    }
   }, []);
 
   useOnceInView(
     ref,
     () => {
       if (!armed.current) return;
-      gsap.to(ref.current.children, { opacity: 1, y: 0, duration: 1.1, ease: EASE_SOFT, stagger, delay, clearProps: 'transform' });
+      const kids = [...ref.current.children];
+      if (mode === 'pill') {
+        kids.forEach((k, i) => {
+          const at = delay + i * Math.max(stagger, 0.12);
+          gsap.to(k, { clipPath: fullClip(radiusOf(k)), duration: 1.15, ease: 'expo.inOut', delay: at, clearProps: 'clipPath' });
+          gsap.to(k.children, { opacity: 1, duration: 0.7, ease: 'power2.out', stagger: 0.06, delay: at + 0.6 });
+        });
+      } else if (mode === 'sweep') {
+        kids.forEach((k, i) =>
+          gsap.to(k, { clipPath: fullClip(radiusOf(k)), duration: 1, ease: 'power3.inOut', delay: delay + i * stagger, clearProps: 'clipPath' }),
+        );
+      } else {
+        gsap.to(kids, { opacity: 1, duration: 0.9, ease: 'power2.out', stagger, delay: delay + 0.25 });
+      }
     },
     { amount },
   );
@@ -104,32 +134,137 @@ export const Reveal = forwardRef(function Reveal(
   return React.createElement(Tag, { ref: setRef, ...rest }, children);
 });
 
-/** Heading whose text slides up from behind its own baseline the first time it is seen. */
-export function RevealHeading({ as: Tag = 'h2', className, children, delay = 0, ...rest }) {
-  const inner = useRef(null);
-  const outer = useRef(null);
-  const armed = useRef(false);
+const VARS = { fontVariationSettings: "'wdth' var(--wdth), 'wght' var(--wght)" };
 
+/**
+ * Heading whose entrance follows its type voice, played once when it is first seen:
+ *   t-wide   - each line starts condensed and light, and stretches out along the width axis.
+ *   t-poster - each letter shoots up from the baseline.
+ *   t-serif  - each word comes into focus, like ink settling.
+ * While it plays, the text is split into its measured lines (so nothing reflows as the widths
+ * change); when it finishes, the heading goes back to plain text.
+ */
+export function RevealHeading({ as: Tag = 'h2', className = '', children, delay = 0, ...rest }) {
+  const voice = /\bt-poster/.test(className) ? 'poster' : /\bt-wide/.test(className) ? 'wide' : 'serif';
+  const text = typeof children === 'string' ? children : null;
+  const words = text ? text.split(' ') : [];
+  const outer = useRef(null);
+  const inner = useRef(null);
+  const target = useRef(null);
+  const [lines, setLines] = useState(null);
+  const [done, setDone] = useState(() => !text);
+
+  // Hidden until it is first seen. Lines are measured then, once the web fonts are in.
   useIsoLayoutEffect(() => {
-    if (prefersReducedMotion() || !inner.current) return;
-    armed.current = true;
-    gsap.set(inner.current, { yPercent: 105 });
+    if (!text || prefersReducedMotion() || !inner.current) {
+      setDone(true);
+      return;
+    }
+    gsap.set(inner.current, { opacity: 0 });
   }, []);
 
   useOnceInView(
     outer,
     () => {
-      if (!armed.current) return;
-      gsap.to(inner.current, { yPercent: 0, duration: 1.2, ease: EASE_SOFT, delay });
+      if (done || !inner.current) return;
+      const measure = () => {
+        const rows = [];
+        let top = null;
+        inner.current.querySelectorAll('[data-w]').forEach((w, i) => {
+          if (top === null || Math.abs(w.offsetTop - top) > 4) {
+            rows.push([]);
+            top = w.offsetTop;
+          }
+          rows[rows.length - 1].push(words[i]);
+        });
+        const cs = getComputedStyle(outer.current);
+        target.current = { wdth: parseFloat(cs.getPropertyValue('--wdth')) || 100, wght: parseFloat(cs.getPropertyValue('--wght')) || 700 };
+        setLines(rows);
+      };
+      if (document.fonts?.status === 'loaded') measure();
+      else document.fonts.ready.then(measure);
     },
     { amount: 0.4 },
   );
 
-  return (
-    <Tag ref={outer} className={className} {...rest}>
-      <span className="reveal-line">
-        <span ref={inner}>{children}</span>
+  // Split into lines: set the starting state and play, before the split is painted.
+  useIsoLayoutEffect(() => {
+    if (!lines || done) return;
+    const el = inner.current;
+    const finish = () => setDone(true);
+    gsap.set(el, { opacity: 1 });
+    if (voice === 'wide') {
+      const { wdth, wght } = target.current;
+      gsap.fromTo(el.querySelectorAll('[data-line]'), { '--wdth': 50, '--wght': 240, opacity: 0 }, { '--wdth': wdth, '--wght': wght, opacity: 1, duration: 1.5, ease: 'expo.out', stagger: 0.12, delay, onComplete: finish });
+    } else if (voice === 'poster') {
+      gsap.fromTo(el.querySelectorAll('[data-c]'), { scaleY: 0, transformOrigin: '50% 100%' }, { scaleY: 1, duration: 0.9, ease: 'expo.out', stagger: 0.025, delay, onComplete: finish });
+    } else {
+      gsap.fromTo(el.querySelectorAll('[data-w]'), { opacity: 0, filter: 'blur(14px)', y: '0.16em' }, { opacity: 1, filter: 'blur(0px)', y: 0, duration: 1.1, ease: 'power3.out', stagger: 0.05, delay, onComplete: finish });
+    }
+  }, [lines]);
+
+  const word = (w, i) => (
+    <React.Fragment key={i}>
+      {i > 0 && ' '}
+      <span data-w className={lines ? 'inline-block' : undefined}>
+        {voice === 'poster' && lines
+          ? [...w].map((c, ci) => (
+              <span key={ci} data-c className="inline-block">
+                {c}
+              </span>
+            ))
+          : w}
       </span>
+    </React.Fragment>
+  );
+
+  let content = children;
+  if (!done) {
+    content = lines
+      ? lines.map((ws, li) => (
+          <span key={li} data-line className="block whitespace-nowrap" style={voice === 'wide' ? VARS : undefined}>
+            {ws.map(word)}
+          </span>
+        ))
+      : words.map(word);
+  }
+
+  return (
+    <Tag ref={outer} className={className} aria-label={!done ? text : undefined} {...rest}>
+      {done ? content : <span ref={inner} aria-hidden="true">{content}</span>}
     </Tag>
+  );
+}
+
+/**
+ * For the stacked panels: the top edge arrives as one soft curve across the whole width and
+ * settles into its rounded corners as the panel lands on the one before it.
+ */
+export function useEdgeSettle(ref) {
+  const armed = useRef(false);
+  const start = useRef(null);
+  useIsoLayoutEffect(() => {
+    const el = ref.current;
+    if (prefersReducedMotion() || !el) return;
+    const depth = Math.max(-parseFloat(getComputedStyle(el).marginTop) || 0, 32);
+    start.current = `${Math.round(el.offsetWidth / 2)}px ${depth}px`;
+    gsap.set(el, { borderTopLeftRadius: start.current, borderTopRightRadius: start.current });
+    armed.current = true;
+  }, []);
+  useOnceInView(
+    ref,
+    () => {
+      if (!armed.current) return;
+      const el = ref.current;
+      gsap.set(el, { clearProps: 'borderTopLeftRadius,borderTopRightRadius' });
+      const r = getComputedStyle(el).borderTopLeftRadius;
+      const end = `${parseFloat(r)}px ${parseFloat(r)}px`;
+      gsap.fromTo(
+        el,
+        { borderTopLeftRadius: start.current, borderTopRightRadius: start.current },
+        { borderTopLeftRadius: end, borderTopRightRadius: end, duration: 1.4, ease: 'expo.out', clearProps: 'borderTopLeftRadius,borderTopRightRadius' },
+      );
+    },
+    { amount: 0, margin: '0px 0px -12% 0px' },
   );
 }

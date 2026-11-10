@@ -59,7 +59,7 @@ export default function Contact() {
               <span className="sr-only" aria-live="polite">{copied ? 'Email address copied.' : ''}</span>
             </Reveal>
           </div>
-          <Reveal as="ul" className="grid content-end gap-3 lg:col-span-6" stagger={0.07}>
+          <Reveal as="ul" mode="sweep" className="grid content-end gap-3 lg:col-span-6" stagger={0.08}>
             <Channel label="Email" value={c.email} href={`mailto:${c.email}`} />
             <Channel label="GitHub" value={c.githubLabel} href={c.github} external />
             <Channel label="LinkedIn" value={c.linkedinLabel} href={c.linkedin} external />

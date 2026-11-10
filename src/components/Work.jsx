@@ -1,6 +1,6 @@
-import React, { lazy, Suspense } from 'react';
+import React, { lazy, Suspense, useRef } from 'react';
 import { featured } from '../data';
-import { Reveal, RevealHeading } from '../lib/motion.jsx';
+import { Reveal, RevealHeading, useEdgeSettle } from '../lib/motion.jsx';
 import { Tags, TextLink, cx } from './ui';
 
 const DEMOS = {
@@ -11,8 +11,11 @@ const DEMOS = {
 
 function Panel({ p, flip, last }) {
   const Demo = DEMOS[p.visual];
+  const edge = useRef(null);
+  useEdgeSettle(edge);
   return (
     <article
+      ref={edge}
       id={p.slug}
       className={`on-light relative mx-3 -mt-12 scroll-mt-16 rounded-t-[40px] sm:mx-5 lg:mx-8 xl:mx-12 text-ink shadow-[0_-24px_48px_-24px_rgba(13,18,64,0.35)] md:-mt-16 md:rounded-t-[64px]${last ? ' rounded-b-[40px] md:rounded-b-[64px]' : ''}`}
       style={{ background: p.color }}
@@ -20,7 +23,7 @@ function Panel({ p, flip, last }) {
       <div className="page grid items-center gap-12 pb-24 pt-16 md:pb-32 md:pt-24 lg:grid-cols-12 lg:gap-10">
         <Reveal className={cx('lg:col-span-5', flip && 'lg:order-2 lg:col-start-8')}>
           <p className="meta">{p.kicker}</p>
-          <h3 className="t-wide mt-3 text-[clamp(40px,4.3vw,70px)]">{p.name}</h3>
+          <RevealHeading as="h3" className="t-wide mt-3 text-[clamp(40px,4.3vw,70px)]">{p.name}</RevealHeading>
           <p className="mt-6 text-lead">{p.summary}</p>
           <p className="mt-4 text-body">{p.detail}</p>
           <dl className="mt-8 grid gap-3 border-t-2 border-ink/15 pt-6">
@@ -36,7 +39,7 @@ function Panel({ p, flip, last }) {
             Code on GitHub
           </TextLink>
         </Reveal>
-        <Reveal className={cx('lg:col-span-7', flip && 'lg:order-1 lg:col-start-1')} y={64}>
+        <Reveal className={cx('lg:col-span-7', flip && 'lg:order-1 lg:col-start-1')} mode="pill">
           <div>
             <Suspense fallback={<div className="h-[440px] rounded-[24px] bg-ink" />}>
               <Demo />

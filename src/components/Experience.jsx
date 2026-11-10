@@ -9,7 +9,7 @@ export function Experience() {
         <RevealHeading id="exp-title" className="t-serif text-[clamp(56px,7vw,116px)]">
           Where I’ve worked
         </RevealHeading>
-        <Reveal as="ol" className="mt-14 border-b-2 border-ink/15" stagger={0.12}>
+        <Reveal as="ol" mode="sweep" className="mt-14 border-b-2 border-ink/15" stagger={0.12}>
           {experience.map((e) => (
             <li key={e.org} className="grid gap-4 border-t-2 border-ink/15 py-10 md:grid-cols-12 md:gap-8">
               <div className="md:col-span-3">
@@ -44,7 +44,7 @@ export function Recognition() {
           <RevealHeading id="rec-title" className="t-wide text-[clamp(40px,4.6vw,74px)]">
             Recognition
           </RevealHeading>
-          <Reveal as="ul" className="mt-12 grid gap-4">
+          <Reveal as="ul" mode="pill" className="mt-12 grid gap-4">
             {recognition.map((r, i) => (
               <li
                 key={r.title}
@@ -65,7 +65,7 @@ export function Recognition() {
           <RevealHeading as="h2" className="t-wide text-[clamp(40px,4.6vw,74px)]">
             Toolkit
           </RevealHeading>
-          <Reveal as="dl" className="mt-12 flex flex-1 flex-col gap-7 lg:justify-between lg:gap-6">
+          <Reveal as="dl" mode="sweep" stagger={0.08} className="mt-12 flex flex-1 flex-col gap-7 lg:justify-between lg:gap-6">
             {toolkit.map(([k, v]) => (
               <div key={k} className="border-t-2 border-cream/15 pt-5">
                 <dt className="text-lead font-bold text-sun">{k}</dt>

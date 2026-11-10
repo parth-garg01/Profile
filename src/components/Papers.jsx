@@ -1,7 +1,7 @@
-import React, { useState } from 'react';
+import React, { useRef, useState } from 'react';
 import { Check, Copy } from 'lucide-react';
 import { papers, profile } from '../data';
-import { Reveal, RevealHeading } from '../lib/motion.jsx';
+import { Reveal, RevealHeading, useEdgeSettle } from '../lib/motion.jsx';
 import { TextLink } from './ui';
 
 function CopyNumber({ value }) {
@@ -30,8 +30,10 @@ function CopyNumber({ value }) {
 
 export default function Papers() {
   const { paper, patent } = papers;
+  const edge = useRef(null);
+  useEdgeSettle(edge);
   return (
-    <section id="papers" className="section relative -mt-12 rounded-t-[40px] bg-violet shadow-[0_-24px_48px_-24px_rgba(13,18,64,0.35)] md:-mt-16 md:rounded-t-[64px]" aria-labelledby="papers-title">
+    <section ref={edge} id="papers" className="section relative -mt-12 rounded-t-[40px] bg-violet shadow-[0_-24px_48px_-24px_rgba(13,18,64,0.35)] md:-mt-16 md:rounded-t-[64px]" aria-labelledby="papers-title">
       <div className="page">
         <div className="flex flex-wrap items-end justify-between gap-6">
           <RevealHeading id="papers-title" className="t-serif text-[clamp(52px,6.4vw,104px)]">
@@ -42,7 +44,7 @@ export default function Papers() {
           </TextLink>
         </div>
 
-        <Reveal className="mt-14 grid gap-6 lg:grid-cols-2" y={60} stagger={0.14}>
+        <Reveal mode="pill" className="mt-14 grid gap-6 lg:grid-cols-2" stagger={0.16}>
           <article className="on-light flex flex-col rounded-[28px] bg-cream p-8 text-ink md:p-12">
             <p className="meta">
               {paper.publisher}, {paper.year}. {paper.role}.

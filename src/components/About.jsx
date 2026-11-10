@@ -14,7 +14,7 @@ export default function About() {
           ))}
         </Reveal>
 
-        <Reveal className="grid gap-5 md:grid-cols-2 lg:col-span-12 lg:grid-cols-12" y={56}>
+        <Reveal mode="pill" className="grid gap-5 md:grid-cols-2 lg:col-span-12 lg:grid-cols-12">
           <div className="rounded-[28px] bg-sun p-8 text-ink md:p-10 lg:col-span-7">
             <p className="meta">Working on now</p>
             <p className="t-serif mt-4 text-[clamp(28px,2.6vw,42px)] leading-[1.08]">
