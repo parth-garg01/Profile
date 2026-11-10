@@ -2,7 +2,7 @@
   command = "npm run build"
   publish = "dist"
 
-# Case-study routes (/work/<slug>) are client-side; send direct visits to the app.
+# Single-page site: any unknown path falls back to the page itself.
 [[redirects]]
   from = "/*"
   to = "/index.html"
