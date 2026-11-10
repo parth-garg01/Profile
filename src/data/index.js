@@ -119,22 +119,22 @@ export const featured = [
   },
 ];
 
-// Everything else worth showing. 21 entries, newest first within each year.
+// Everything else worth showing. 21 entries. `best` marks the one shown per category before "View all".
 export const projects = [
-  { name: 'BlindSpot', cat: 'hardware', year: 2025, stack: 'Raspberry Pi 5, Python, OpenCV', summary: 'A camera on a Raspberry Pi that tells a visually impaired user what is in front of them, out loud. Won the AI track at Code2Create and is the subject of the patent application.', link: 'https://github.com/Ad1th/BlindSpot', team: true },
-  { name: 'CodeWeaver', cat: 'software', year: 2026, stack: 'Python', summary: 'LLM-free code migration through a typed intermediate representation, which reports exactly what it could not translate.', link: gh('Codeweaver') },
+  { name: 'BlindSpot', best: true, cat: 'hardware', year: 2025, stack: 'Raspberry Pi 5, Python, OpenCV', summary: 'A camera on a Raspberry Pi that tells a visually impaired user what is in front of them, out loud. Won the AI track at Code2Create and is the subject of the patent application.', link: 'https://github.com/Ad1th/BlindSpot', team: true },
+  { name: 'CodeWeaver', best: true, cat: 'software', year: 2026, stack: 'Python', summary: 'LLM-free code migration through a typed intermediate representation, which reports exactly what it could not translate.', link: gh('Codeweaver') },
   { name: 'Nova', cat: 'ai', year: 2026, stack: 'Python, RAG, React', summary: 'A company-agnostic AI assistant demo with streaming chat, cited retrieval, permission-controlled tools and evaluation.', link: gh('Omniagent') },
-  { name: 'TroubleIR', cat: 'ai', year: 2026, stack: 'Python, Groq', summary: 'Samsung PRISM: turns a vague Galaxy device complaint into a validated, step-by-step troubleshooting plan grounded in support documents.', link: gh('TroubleIR') },
+  { name: 'TroubleIR', best: true, cat: 'ai', year: 2026, stack: 'Python, Groq', summary: 'Samsung PRISM: turns a vague Galaxy device complaint into a validated, step-by-step troubleshooting plan grounded in support documents.', link: gh('TroubleIR') },
   { name: 'ChainTrace', cat: 'security', year: 2026, stack: 'JavaScript, blockchain', summary: 'Scan a package and check every claim about its journey against the signed on-chain checkpoint behind it.', link: gh('chaintrace') },
   { name: 'iPadDisplay', cat: 'software', year: 2026, stack: 'C++', summary: 'Turns an iPad into a real second display for a Windows laptop over local Wi-Fi, with its own wire protocol and pairing.', link: gh('duet_link') },
   { name: 'LPM for Windows', cat: 'software', year: 2026, stack: 'Rust, ConPTY', summary: 'A native Windows workspace for running services, actions and parallel AI coding agents side by side.', link: gh('lpm_windows') },
   { name: 'Smart Mail Merger', cat: 'software', year: 2026, stack: 'Electron, React, Gmail API', summary: 'Scheduled, personalised Gmail campaigns from a spreadsheet, as a desktop app and a hosted web version.', link: gh('mail_merge_web') },
   { name: 'ScanMark', cat: 'software', year: 2026, stack: 'TypeScript', summary: 'Event attendance from a phone camera: volunteers scan ID card barcodes into one shared Google Sheet.', link: gh('barcode_scanner') },
   { name: 'Grape Leaf Disease Benchmark', cat: 'research', year: 2026, stack: 'Python, PyTorch', summary: 'How much CNNs and transformers lose when they move from lab images to field images of grape leaves.', link: gh('grape_leaf_disease_exp') },
-  { name: 'Retinal Disease Screening', cat: 'research', year: 2026, stack: 'Python, scikit-learn, XGBoost', summary: '628 handcrafted features per patient on ODIR-5K, fed to voting and stacking ensembles. The code behind the NELEX paper.', link: gh('OcularDisease') },
+  { name: 'Retinal Disease Screening', best: true, cat: 'research', year: 2026, stack: 'Python, scikit-learn, XGBoost', summary: '628 handcrafted features per patient on ODIR-5K, fed to voting and stacking ensembles. The code behind the NELEX paper.', link: gh('OcularDisease') },
   { name: 'Digital Twin', cat: 'research', year: 2026, stack: 'Python, STGCN', summary: 'A coupled smart-city simulation where traffic flow and energy demand drive each other, forecast with a spatiotemporal graph network on METR-LA.', link: gh('Digital-Twin') },
   { name: 'VoxCraft', cat: 'ai', year: 2026, stack: 'FastAPI, Next.js, Whisper', summary: 'An offline-first speech-to-text and text-to-speech platform with REST APIs and a fine-tuning pipeline.', link: gh('NLP') },
-  { name: 'Sentinel', cat: 'security', year: 2026, stack: 'Flutter, AES, SHA-256', summary: 'Emergency reporting disguised as a calculator, with encrypted evidence, hash-chained integrity and delayed upload.', link: gh('Sentinel') },
+  { name: 'Sentinel', best: true, cat: 'security', year: 2026, stack: 'Flutter, AES, SHA-256', summary: 'Emergency reporting disguised as a calculator, with encrypted evidence, hash-chained integrity and delayed upload.', link: gh('Sentinel') },
   { name: 'FocusLock', cat: 'software', year: 2026, stack: 'Kotlin, Chrome extension', summary: 'Timed focus sessions that block chosen apps on Android and chosen sites in Chrome, with a strict mode.', link: gh('FocusLock') },
   { name: 'Deadline Sentinel', cat: 'software', year: 2026, stack: 'Chrome extension', summary: 'Reads assignment deadlines from the college portal and emails a reminder a day before each one.', link: gh('Assignment-Deadline-Tracker') },
   { name: 'TAM Research Cycle Portal', cat: 'software', year: 2026, stack: 'Next.js, MongoDB', summary: 'Weekly research updates for the TAM club, with Google sign-in and an admin view that sends reminders.', link: gh('TAM-ResearchCycle-TaskSubmission-Portal') },

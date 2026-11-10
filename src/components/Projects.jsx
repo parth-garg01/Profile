@@ -41,6 +41,7 @@ function Row({ p }) {
 
 export default function Projects() {
   const [filter, setFilter] = useState('all');
+  const [all, setAll] = useState(false);
   const list = useRef(null);
   const tabs = useRef(null);
   const [pill, setPill] = useState({ left: 0, width: 0 });
@@ -51,9 +52,12 @@ export default function Projects() {
   const groups = useMemo(
     () =>
       CATEGORIES.filter((c) => filter === 'all' || c.id === filter)
-        .map((c) => ({ cat: c, items: projects.filter((p) => p.cat === c.id).sort((a, b) => b.year - a.year) }))
+        .map((c) => {
+          const items = projects.filter((p) => p.cat === c.id).sort((a, b) => (b.best ? 1 : 0) - (a.best ? 1 : 0) || b.year - a.year);
+          return { cat: c, total: items.length, items: filter === 'all' && !all ? items.filter((p) => p.best) : items };
+        })
         .filter((g) => g.items.length),
-    [filter],
+    [filter, all],
   );
   const shown = groups.reduce((n, g) => n + g.items.length, 0);
   const counts = useMemo(() => Object.fromEntries(CATEGORIES.map((c) => [c.id, projects.filter((p) => p.cat === c.id).length])), []);
@@ -69,7 +73,7 @@ export default function Projects() {
     if (!animate.current || prefersReducedMotion()) return;
     animate.current = false;
     gsap.fromTo(list.current.querySelectorAll('[data-row]'), { opacity: 0, y: 28 }, { opacity: 1, y: 0, duration: 0.8, ease: 'expo.out', stagger: 0.035, clearProps: 'transform' });
-  }, [filter]);
+  }, [filter, all]);
 
   const choose = (id) => {
     animate.current = true;
@@ -119,7 +123,7 @@ export default function Projects() {
               <h3 data-row className="flex items-center gap-3 pb-4 text-small font-semibold">
                 <span aria-hidden="true" className="h-3.5 w-10 rounded-full" style={{ background: g.cat.color }} />
                 {g.cat.name}
-                <span className="font-normal text-mist">{g.items.length}</span>
+                <span className="font-normal text-mist">{g.items.length < g.total ? `1 of ${g.total}` : g.total}</span>
               </h3>
               <ul className="border-b-2 border-cream/15">
                 {g.items.map((p) => (
@@ -129,6 +133,21 @@ export default function Projects() {
             </div>
           ))}
         </div>
+
+        {filter === 'all' && (
+          <button
+            type="button"
+            aria-expanded={all}
+            onClick={() => {
+              animate.current = !all;
+              setAll((a) => !a);
+            }}
+            className="group relative mt-10 inline-flex h-14 items-center overflow-hidden rounded-full border-2 border-cream px-7 font-semibold transition-colors duration-500 ease-soft hover:text-ink"
+          >
+            <span aria-hidden="true" className="absolute inset-0 origin-left scale-x-0 bg-cream transition-transform duration-500 ease-soft group-hover:scale-x-100" />
+            <span className="relative">{all ? 'Show the highlights only' : `View all ${projects.length} projects`}</span>
+          </button>
+        )}
       </div>
     </section>
   );
