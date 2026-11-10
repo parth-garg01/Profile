@@ -125,8 +125,7 @@ export default function BisectionDemo() {
         )}
       </p>
 
-      <div className="mt-4 flex items-center justify-between gap-3">
-        <span className="text-small text-mist">The README’s demo, redrawn as an illustration.</span>
+      <div className="mt-4 flex items-center justify-end gap-3">
         <button
           type="button"
           onClick={play}

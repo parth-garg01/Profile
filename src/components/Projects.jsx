@@ -66,7 +66,7 @@ export default function Projects() {
   useLayoutEffect(() => {
     const b = tabs.current?.querySelector('[aria-pressed="true"]');
     if (b) setPill({ left: b.offsetLeft, width: b.offsetWidth });
-  }, [filter]);
+  }, [filter, all]);
 
   // When the list changes, the rows ease in one after another.
   useLayoutEffect(() => {
@@ -80,7 +80,7 @@ export default function Projects() {
     setFilter(id);
   };
 
-  const options = [{ id: 'all', name: 'All', count: projects.length, color: '#FFF4E0' }, ...CATEGORIES.map((c) => ({ ...c, count: counts[c.id] }))];
+  const options = [{ id: 'all', name: 'Highlights', count: all ? projects.length : projects.filter((p) => p.best).length, color: '#FFF4E0' }, ...CATEGORIES.map((c) => ({ ...c, count: counts[c.id] }))];
   const pillColor = options.find((o) => o.id === filter).color;
 
   return (
