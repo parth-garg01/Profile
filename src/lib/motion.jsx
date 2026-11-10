@@ -70,11 +70,24 @@ export function useScenes() {
     // A scene taller than the screen pins by its bottom edge, so all of it can be read first.
     // Then it holds still for a short stretch of scrolling (its bottom margin) before the next
     // scene starts to slide over, so one hard flick doesn't throw the next section in at once.
+    // Phones grow and shrink the screen height as the address bar slides in and out while
+    // scrolling. Measure the height once and only again when the width changes (rotation),
+    // so the pins and holds don't shift the page mid-scroll.
+    let vw = window.innerWidth;
+    let vh = window.innerHeight;
     const fit = () =>
       els.forEach((el, i) => {
-        el.style.top = `${Math.min(0, window.innerHeight - el.offsetHeight)}px`;
-        if (i < els.length - 1) el.style.marginBottom = `${Math.round(window.innerHeight * HOLD)}px`;
+        el.style.top = `${Math.min(0, vh - el.offsetHeight)}px`;
+        if (i < els.length - 1) el.style.marginBottom = `${Math.round(vh * HOLD)}px`;
       });
+    const onResize = () => {
+      if (window.innerWidth !== vw) {
+        vw = window.innerWidth;
+        vh = window.innerHeight;
+        fit();
+      }
+      queue();
+    };
     let raf = 0;
     const check = () => {
       raf = 0;
@@ -82,7 +95,7 @@ export function useScenes() {
       const atEnd = vh + window.scrollY >= document.documentElement.scrollHeight - 2;
       const tops = els.map((el) => el.getBoundingClientRect().top);
       els.forEach((el, i) => {
-        if (tops[i] <= 4 || (atEnd && tops[i] < vh)) markArrived(el);
+        if (tops[i] <= Math.max(24, vh * 0.04) || (atEnd && tops[i] < vh)) markArrived(el);
         const next = tops[i + 1];
         el.style.visibility = next !== undefined && next <= -120 ? 'hidden' : '';
       });
@@ -120,13 +133,13 @@ export function useScenes() {
     fit();
     check();
     window.addEventListener('scroll', queue, { passive: true });
-    window.addEventListener('resize', queue);
+    window.addEventListener('resize', onResize);
     return () => {
       document.removeEventListener('click', onClick);
       ro.disconnect();
       cancelAnimationFrame(raf);
       window.removeEventListener('scroll', queue);
-      window.removeEventListener('resize', queue);
+      window.removeEventListener('resize', onResize);
     };
   }, []);
 }
