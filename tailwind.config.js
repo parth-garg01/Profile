@@ -19,7 +19,7 @@ export default {
         mist: '#C3CAFF',
         sun: '#FFD43B',
         coral: '#FF5B3A',
-        peach: '#FFB385',
+        amber: '#FFB000',
         mint: '#3BF0B0',
         pink: '#FF9BE0',
         violet: '#7A3CF0',
