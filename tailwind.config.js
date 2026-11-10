@@ -22,6 +22,7 @@ export default {
         mint: '#3BF0B0',
         pink: '#FF9BE0',
         violet: '#7A3CF0',
+        teal: '#0B6E6A',
       },
       fontFamily: {
         display: ['"Anybody Variable"', 'Impact', 'sans-serif'],

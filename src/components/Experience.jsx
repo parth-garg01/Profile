@@ -38,7 +38,7 @@ export function Experience() {
 
 export function Recognition() {
   return (
-    <section id="recognition" className="section" aria-labelledby="rec-title">
+    <section id="recognition" className="section relative -mt-12 rounded-t-[40px] bg-teal shadow-[0_-24px_48px_-24px_rgba(13,18,64,0.35)] md:-mt-16 md:rounded-t-[64px]" aria-labelledby="rec-title">
       <div className="page grid gap-16 lg:grid-cols-12 lg:gap-10">
         <div className="lg:col-span-7">
           <RevealHeading id="rec-title" className="h-section">
@@ -55,7 +55,7 @@ export function Recognition() {
                   <p className="meta">{r.year}</p>
                 </div>
                 <h3 className={i === 0 ? 'h-title mt-4 text-[clamp(34px,4vw,60px)]' : 'h-title mt-4'}>{r.title}</h3>
-                {r.note && <p className={i === 0 ? 'mt-3 text-body' : 'mt-3 text-body text-mist'}>{r.note}</p>}
+                {r.note && <p className={i === 0 ? 'mt-3 text-body' : 'mt-3 text-body text-cream/75'}>{r.note}</p>}
               </li>
             ))}
           </Reveal>
