@@ -61,15 +61,15 @@ export function Recognition() {
           </Reveal>
         </div>
 
-        <div className="lg:col-span-5">
+        <div className="flex flex-col lg:col-span-5">
           <RevealHeading as="h2" className="t-wide text-[clamp(40px,4.6vw,74px)]">
             Toolkit
           </RevealHeading>
-          <Reveal as="dl" className="mt-12 grid gap-7">
+          <Reveal as="dl" className="mt-12 flex flex-1 flex-col gap-7 lg:justify-between lg:gap-6">
             {toolkit.map(([k, v]) => (
               <div key={k} className="border-t-2 border-cream/15 pt-5">
-                <dt className="font-medium text-sun">{k}</dt>
-                <dd className="mt-2 text-body">{v}</dd>
+                <dt className="text-lead font-medium text-sun">{k}</dt>
+                <dd className="mt-2 text-[clamp(18px,1.45vw,22px)] leading-[1.5]">{v}</dd>
               </div>
             ))}
           </Reveal>
