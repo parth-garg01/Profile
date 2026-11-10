@@ -1,7 +1,7 @@
 import React, { useLayoutEffect, useMemo, useRef, useState } from 'react';
 import { ArrowUpRight } from 'lucide-react';
 import { CATEGORIES, categoryById, projects } from '../data';
-import { gsap, prefersReducedMotion, RevealHeading, useOnceInView } from '../lib/motion.jsx';
+import { gsap, prefersReducedMotion, Reveal, RevealHeading, useOnceInView } from '../lib/motion.jsx';
 import { cx } from './ui';
 
 function Row({ p }) {
@@ -100,13 +100,14 @@ export default function Projects() {
   const pillColor = options.find((o) => o.id === filter).color;
 
   return (
-    <section id="projects" className="section" aria-labelledby="projects-title">
+    <section id="projects" data-scene className="scene section bg-blue" aria-labelledby="projects-title">
       <div className="page">
         <RevealHeading id="projects-title" className="t-poster text-[clamp(64px,9vw,148px)]">
           More things I’ve built
         </RevealHeading>
 
-        <div className="mt-10 overflow-x-auto pb-2">
+        <Reveal className="mt-10">
+        <div className="overflow-x-auto pb-2">
           <div ref={tabs} role="group" aria-label="Filter projects" className="relative inline-flex gap-1 rounded-full border-2 border-cream/20 p-1">
             <span aria-hidden="true" className="absolute inset-y-1 rounded-full transition-all duration-500 ease-soft" style={{ left: pill.left, width: pill.width, background: pillColor }} />
             {options.map((o) => (
@@ -129,6 +130,7 @@ export default function Projects() {
             ))}
           </div>
         </div>
+        </Reveal>
         <p className="sr-only" aria-live="polite">
           Showing {shown} projects.
         </p>

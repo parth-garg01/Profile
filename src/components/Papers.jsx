@@ -33,18 +33,20 @@ export default function Papers() {
   const edge = useRef(null);
   useEdgeSettle(edge);
   return (
-    <section ref={edge} id="papers" className="section relative -mt-12 rounded-t-[40px] bg-violet shadow-[0_-24px_48px_-24px_rgba(13,18,64,0.35)] md:-mt-16 md:rounded-t-[64px]" aria-labelledby="papers-title">
+    <section ref={edge} id="papers" data-scene className="scene section -mt-12 rounded-t-[40px] bg-violet shadow-[0_-24px_48px_-24px_rgba(13,18,64,0.35)] md:-mt-16 md:rounded-t-[64px]" aria-labelledby="papers-title">
       <div className="page">
         <div className="flex flex-wrap items-end justify-between gap-6">
           <RevealHeading id="papers-title" className="t-serif text-[clamp(52px,6.4vw,104px)]">
             Papers and patents
           </RevealHeading>
-          <TextLink href={profile.contact.scholar} className="text-cream">
-            Google Scholar
-          </TextLink>
+          <Reveal delay={0.3}>
+            <TextLink href={profile.contact.scholar} className="text-cream">
+              Google Scholar
+            </TextLink>
+          </Reveal>
         </div>
 
-        <Reveal mode="pill" className="mt-14 grid gap-6 lg:grid-cols-2" stagger={0.16}>
+        <Reveal mode="card" className="mt-14 grid gap-6 lg:grid-cols-2" stagger={0.16}>
           <article className="on-light flex flex-col rounded-[28px] bg-cream p-8 text-ink md:p-12">
             <p className="meta">
               {paper.publisher}, {paper.year}. {paper.role}.

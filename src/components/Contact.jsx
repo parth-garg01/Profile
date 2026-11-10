@@ -40,7 +40,7 @@ export default function Contact() {
 
   return (
     <>
-      <section id="contact" className="on-light bg-sun text-ink" aria-labelledby="contact-title">
+      <section id="contact" data-scene className="scene on-light flex flex-col justify-center bg-sun text-ink" aria-labelledby="contact-title">
         <div className="page grid gap-12 py-24 md:py-32 lg:grid-cols-12 lg:py-40">
           <div className="lg:col-span-6">
             <RevealHeading id="contact-title" className="t-wide text-[clamp(64px,7.5vw,120px)] leading-[0.92]">
@@ -68,7 +68,7 @@ export default function Contact() {
           </Reveal>
         </div>
       </section>
-      <footer className="bg-ink text-mist">
+      <footer className="relative bg-ink text-mist">
         <div className="page flex flex-wrap items-center justify-between gap-3 py-6 text-small">
           <p>© 2026 {profile.name}</p>
           <p>Last updated {profile.lastUpdated}</p>

@@ -17,10 +17,11 @@ function Panel({ p, flip, last }) {
     <article
       ref={edge}
       id={p.slug}
-      className={`on-light relative mx-3 -mt-12 scroll-mt-16 rounded-t-[40px] sm:mx-5 lg:mx-8 xl:mx-12 text-ink shadow-[0_-24px_48px_-24px_rgba(13,18,64,0.35)] md:-mt-16 md:rounded-t-[64px]${last ? ' rounded-b-[40px] md:rounded-b-[64px]' : ''}`}
+      data-scene
+      className={`scene on-light flex flex-col justify-center mx-3 -mt-12 scroll-mt-16 rounded-t-[40px] sm:mx-5 lg:mx-8 xl:mx-12 text-ink shadow-[0_-24px_48px_-24px_rgba(13,18,64,0.35)] md:-mt-16 md:rounded-t-[64px]${last ? ' rounded-b-[40px] md:rounded-b-[64px]' : ''}`}
       style={{ background: p.color }}
     >
-      <div className="page grid items-center gap-12 pb-24 pt-16 md:pb-32 md:pt-24 lg:grid-cols-12 lg:gap-10">
+      <div className="page grid w-full items-center gap-12 pb-24 pt-16 md:pb-32 md:pt-24 lg:grid-cols-12 lg:gap-10">
         <Reveal className={cx('lg:col-span-5', flip && 'lg:order-2 lg:col-start-8')}>
           <p className="meta">{p.kicker}</p>
           <RevealHeading as="h3" className="t-wide mt-3 text-[clamp(40px,4.3vw,70px)]">{p.name}</RevealHeading>
@@ -39,7 +40,7 @@ function Panel({ p, flip, last }) {
             Code on GitHub
           </TextLink>
         </Reveal>
-        <Reveal className={cx('lg:col-span-7', flip && 'lg:order-1 lg:col-start-1')} mode="pill">
+        <Reveal className={cx('lg:col-span-7', flip && 'lg:order-1 lg:col-start-1')} mode="card">
           <div>
             <Suspense fallback={<div className="h-[440px] rounded-[24px] bg-ink" />}>
               <Demo />
@@ -54,7 +55,7 @@ function Panel({ p, flip, last }) {
 export default function Work() {
   return (
     <section id="work" className="bg-mint pb-24 md:pb-32" aria-labelledby="work-title">
-      <div className="on-light bg-mint text-ink">
+      <div data-scene className="scene on-light flex flex-col justify-center bg-mint text-ink">
         <div className="page pb-28 pt-20 md:pb-36 md:pt-28">
         <RevealHeading id="work-title" className="t-wide max-w-[16ch] text-[clamp(44px,6vw,100px)]">
           Three projects I’d walk you through

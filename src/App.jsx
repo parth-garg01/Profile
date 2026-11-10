@@ -7,8 +7,10 @@ import Papers from './components/Papers';
 import Projects from './components/Projects';
 import { Experience, Recognition } from './components/Experience';
 import Contact from './components/Contact';
+import { useScenes } from './lib/motion.jsx';
 
 export default function App() {
+  useScenes();
   return (
     <>
       <Navbar />

@@ -68,7 +68,7 @@ export default function Hero() {
   }, []);
 
   return (
-    <section ref={root} id="top" className="relative flex min-h-[100svh] flex-col">
+    <section ref={root} id="top" data-scene className="scene flex min-h-[100svh] flex-col">
       <div className="flex flex-1 flex-col justify-center bg-blue pb-8 pt-[calc(68px+2rem)] md:pb-10 md:pt-[calc(68px+2.5rem)]">
         <div className="page">
           <h1 aria-label={profile.name} className="hero-name font-display uppercase tracking-[-0.03em]">

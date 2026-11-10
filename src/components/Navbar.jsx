@@ -4,18 +4,35 @@ import { NAV, profile } from '../data';
 import { cx } from './ui';
 import { gsap, prefersReducedMotion } from '../lib/motion.jsx';
 
-/** Which section is under the middle of the screen. */
+/**
+ * Which section is on screen: the last one whose top has passed the middle of the screen.
+ * (Sections are sticky and stay under the ones that cover them, so this goes by position.)
+ */
 function useCurrent() {
   const [current, setCurrent] = useState(null);
   useEffect(() => {
-    if (typeof IntersectionObserver === 'undefined') return undefined;
     const els = NAV.map((n) => document.getElementById(n.id)).filter(Boolean);
-    const io = new IntersectionObserver(
-      (entries) => entries.forEach((e) => e.isIntersecting && setCurrent(e.target.id)),
-      { rootMargin: '-45% 0px -50% 0px' },
-    );
-    els.forEach((el) => io.observe(el));
-    return () => io.disconnect();
+    let raf = 0;
+    const check = () => {
+      raf = 0;
+      const mid = window.innerHeight * 0.5;
+      let id = null;
+      els.forEach((el) => {
+        if (el.getBoundingClientRect().top <= mid) id = el.id;
+      });
+      setCurrent(id);
+    };
+    const queue = () => {
+      if (!raf) raf = requestAnimationFrame(check);
+    };
+    check();
+    window.addEventListener('scroll', queue, { passive: true });
+    window.addEventListener('resize', queue);
+    return () => {
+      cancelAnimationFrame(raf);
+      window.removeEventListener('scroll', queue);
+      window.removeEventListener('resize', queue);
+    };
   }, []);
   return current;
 }

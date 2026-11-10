@@ -29,8 +29,104 @@ export function useMediaQuery(query) {
   return matches;
 }
 
-/** Calls `onEnter` the first time the element is at least `amount` visible. */
-export function useOnceInView(ref, onEnter, { amount = 0.2, margin = '0px 0px -8% 0px' } = {}) {
+/*
+ * Scenes. Every top-level section (and each featured project panel) is a scene: it is sticky,
+ * so the next scene slides up over it like a card being laid on a stack. A scene's contents stay
+ * hidden while it is sliding in and only play once it has fully arrived at the top of the screen.
+ */
+const sceneState = new Map();
+const stateOf = (el) => {
+  let st = sceneState.get(el);
+  if (!st) {
+    st = { arrived: false, subs: new Set() };
+    sceneState.set(el, st);
+  }
+  return st;
+};
+function onSceneArrive(el, fn) {
+  const st = stateOf(el);
+  if (st.arrived) {
+    fn();
+    return () => {};
+  }
+  st.subs.add(fn);
+  return () => st.subs.delete(fn);
+}
+function markArrived(el) {
+  const st = stateOf(el);
+  if (st.arrived) return;
+  st.arrived = true;
+  st.subs.forEach((f) => f());
+  st.subs.clear();
+}
+
+/** Mount once (in App). Pins each scene, marks arrivals and hides scenes fully covered by the next. */
+export function useScenes() {
+  useEffect(() => {
+    const els = [...document.querySelectorAll('[data-scene]')];
+    // A scene taller than the screen pins by its bottom edge, so all of it can be read first.
+    const fit = () => els.forEach((el) => (el.style.top = `${Math.min(0, window.innerHeight - el.offsetHeight)}px`));
+    let raf = 0;
+    const check = () => {
+      raf = 0;
+      const vh = window.innerHeight;
+      const atEnd = vh + window.scrollY >= document.documentElement.scrollHeight - 2;
+      const tops = els.map((el) => el.getBoundingClientRect().top);
+      els.forEach((el, i) => {
+        if (tops[i] <= 4 || (atEnd && tops[i] < vh)) markArrived(el);
+        const next = tops[i + 1];
+        el.style.visibility = next !== undefined && next <= -120 ? 'hidden' : '';
+      });
+    };
+    const queue = () => {
+      if (!raf) raf = requestAnimationFrame(check);
+    };
+    const ro = new ResizeObserver(() => {
+      fit();
+      queue();
+    });
+    els.forEach((el) => ro.observe(el));
+    // In-page links: a pinned scene reports its pinned position, so scroll to where it sits in the
+    // page instead, measured with the pin briefly released.
+    const flowTop = (target) => {
+      const pinned = target.closest('[data-scene]') || target;
+      const { position, top } = pinned.style;
+      pinned.style.position = 'static';
+      const y = target.getBoundingClientRect().top + window.scrollY;
+      Object.assign(pinned.style, { position, top });
+      return y;
+    };
+    const onClick = (e) => {
+      const a = e.target.closest?.('a[href^="#"]');
+      if (!a || e.defaultPrevented || e.metaKey || e.ctrlKey || e.shiftKey) return;
+      const id = decodeURIComponent(a.getAttribute('href').slice(1));
+      const target = id ? document.getElementById(id) : null;
+      if (!target) return;
+      e.preventDefault();
+      window.scrollTo({ top: Math.max(0, flowTop(target)), behavior: prefersReducedMotion() ? 'auto' : 'smooth' });
+      history.pushState(null, '', `#${id}`);
+      target.focus?.({ preventScroll: true });
+    };
+    document.addEventListener('click', onClick);
+    fit();
+    check();
+    window.addEventListener('scroll', queue, { passive: true });
+    window.addEventListener('resize', queue);
+    return () => {
+      document.removeEventListener('click', onClick);
+      ro.disconnect();
+      cancelAnimationFrame(raf);
+      window.removeEventListener('scroll', queue);
+      window.removeEventListener('resize', queue);
+    };
+  }, []);
+}
+
+/**
+ * Calls `onEnter` once, when the element is at least `amount` visible and its scene has arrived.
+ * `gate: false` skips the scene check (for things that animate while the scene slides in).
+ */
+export function useOnceInView(ref, onEnter, { amount = 0.2, margin = '0px 0px -8% 0px', gate = true } = {}) {
   const cb = useRef(onEnter);
   cb.current = onEnter;
   useEffect(() => {
@@ -40,18 +136,38 @@ export function useOnceInView(ref, onEnter, { amount = 0.2, margin = '0px 0px -8
       cb.current();
       return undefined;
     }
-    const io = new IntersectionObserver(
+    let inView = false;
+    let arrived = !gate;
+    let fired = false;
+    let io = null;
+    let off = () => {};
+    const tryFire = () => {
+      if (fired || !inView || !arrived) return;
+      fired = true;
+      io?.disconnect();
+      off();
+      cb.current();
+    };
+    io = new IntersectionObserver(
       ([entry]) => {
-        if (entry.isIntersecting) {
-          io.disconnect();
-          cb.current();
-        }
+        inView = entry.isIntersecting;
+        tryFire();
       },
       { threshold: amount, rootMargin: margin },
     );
     io.observe(el);
-    return () => io.disconnect();
-  }, [ref, amount, margin]);
+    const scene = gate ? el.closest('[data-scene]') : null;
+    if (scene) {
+      off = onSceneArrive(scene, () => {
+        arrived = true;
+        tryFire();
+      });
+    } else arrived = true;
+    return () => {
+      io.disconnect();
+      off();
+    };
+  }, [ref, amount, margin, gate]);
 }
 
 /** In-view flag that follows visibility (used to pause and resume live demos). */
@@ -74,15 +190,15 @@ const radiusOf = (el) => parseFloat(getComputedStyle(el).borderTopLeftRadius) ||
 const fullClip = (r) => `inset(0% 0% 0% 0% round ${r}px)`;
 
 /**
- * Reveal: plays once, the first time the group reaches the screen. Each mode borrows a shape
- * the page already uses, so entrances read as part of the design rather than a generic fade-up.
- *   fade  - the children simply come up in opacity, trailing the heading.
- *   pill  - each child starts as a small pill (the button shape) and grows out to its own
- *           corners; its contents arrive once it is open.
+ * Reveal: plays once, when its scene has arrived and the group is on screen. No blur, no scaling:
+ * everything is uncovered by a moving edge.
+ *   fade  - each child rises a short way into an opening window (a mask wiping upward).
+ *   card  - each child is uncovered from the bottom up, corners and all, while its contents
+ *           travel up a little further, so the card seems to open rather than appear.
  *   sweep - each child is wiped in from the left, the same sweep the hover states use.
  */
 export const Reveal = forwardRef(function Reveal(
-  { as: Tag = 'div', mode = 'fade', stagger = 0.09, delay = 0, amount = 0.15, children, ...rest },
+  { as: Tag = 'div', mode = 'fade', stagger = 0.1, delay = 0, amount = 0.15, children, ...rest },
   outerRef,
 ) {
   const ref = useRef(null);
@@ -96,37 +212,35 @@ export const Reveal = forwardRef(function Reveal(
   useIsoLayoutEffect(() => {
     if (prefersReducedMotion() || !ref.current) return;
     armed.current = true;
-    const kids = [...ref.current.children];
-    if (mode === 'pill') {
-      kids.forEach((k) => {
-        gsap.set(k, { clipPath: 'inset(42% 34% 42% 34% round 999px)' });
-        gsap.set(k.children, { opacity: 0 });
-      });
-    } else if (mode === 'sweep') {
-      kids.forEach((k) => gsap.set(k, { clipPath: `inset(0% 100% 0% 0% round ${radiusOf(k)}px)` }));
-    } else {
-      gsap.set(kids, { opacity: 0 });
-    }
+    [...ref.current.children].forEach((k) => {
+      const r = radiusOf(k);
+      if (mode === 'card') {
+        gsap.set(k, { clipPath: `inset(100% 0% 0% 0% round ${r}px)` });
+        gsap.set(k.children, { y: 70 });
+      } else if (mode === 'sweep') {
+        gsap.set(k, { clipPath: `inset(0% 100% 0% 0% round ${r}px)` });
+      } else {
+        gsap.set(k, { clipPath: `inset(0% 0% 100% 0% round ${r}px)`, y: 36 });
+      }
+    });
   }, []);
 
   useOnceInView(
     ref,
     () => {
       if (!armed.current) return;
-      const kids = [...ref.current.children];
-      if (mode === 'pill') {
-        kids.forEach((k, i) => {
-          const at = delay + i * Math.max(stagger, 0.12);
-          gsap.to(k, { clipPath: fullClip(radiusOf(k)), duration: 1.15, ease: 'expo.inOut', delay: at, clearProps: 'clipPath' });
-          gsap.to(k.children, { opacity: 1, duration: 0.7, ease: 'power2.out', stagger: 0.06, delay: at + 0.6 });
-        });
-      } else if (mode === 'sweep') {
-        kids.forEach((k, i) =>
-          gsap.to(k, { clipPath: fullClip(radiusOf(k)), duration: 1, ease: 'power3.inOut', delay: delay + i * stagger, clearProps: 'clipPath' }),
-        );
-      } else {
-        gsap.to(kids, { opacity: 1, duration: 0.9, ease: 'power2.out', stagger, delay: delay + 0.25 });
-      }
+      [...ref.current.children].forEach((k, i) => {
+        const at = delay + i * stagger;
+        const clip = fullClip(radiusOf(k));
+        if (mode === 'card') {
+          gsap.to(k, { clipPath: clip, duration: 1.3, ease: 'expo.inOut', delay: at, clearProps: 'clipPath' });
+          gsap.to(k.children, { y: 0, duration: 1.6, ease: 'expo.out', delay: at + 0.35, clearProps: 'transform' });
+        } else if (mode === 'sweep') {
+          gsap.to(k, { clipPath: clip, duration: 1.1, ease: 'expo.inOut', delay: at, clearProps: 'clipPath' });
+        } else {
+          gsap.to(k, { clipPath: clip, y: 0, duration: 1.3, ease: 'expo.out', delay: at + 0.2, clearProps: 'clipPath,transform' });
+        }
+      });
     },
     { amount },
   );
@@ -134,27 +248,19 @@ export const Reveal = forwardRef(function Reveal(
   return React.createElement(Tag, { ref: setRef, ...rest }, children);
 });
 
-const VARS = { fontVariationSettings: "'wdth' var(--wdth), 'wght' var(--wght)" };
-
 /**
- * Heading whose entrance follows its type voice, played once when it is first seen:
- *   t-wide   - each line starts condensed and light, and stretches out along the width axis.
- *   t-poster - each letter shoots up from the baseline.
- *   t-serif  - each word comes into focus, like ink settling.
- * While it plays, the text is split into its measured lines (so nothing reflows as the widths
- * change); when it finishes, the heading goes back to plain text.
+ * Heading that rises line by line from behind its own baseline, once its scene has arrived.
+ * Lines are measured at that moment (fonts are in by then); when it finishes, the heading goes
+ * back to plain text.
  */
 export function RevealHeading({ as: Tag = 'h2', className = '', children, delay = 0, ...rest }) {
-  const voice = /\bt-poster/.test(className) ? 'poster' : /\bt-wide/.test(className) ? 'wide' : 'serif';
   const text = typeof children === 'string' ? children : null;
   const words = text ? text.split(' ') : [];
   const outer = useRef(null);
   const inner = useRef(null);
-  const target = useRef(null);
   const [lines, setLines] = useState(null);
   const [done, setDone] = useState(() => !text);
 
-  // Hidden until it is first seen. Lines are measured then, once the web fonts are in.
   useIsoLayoutEffect(() => {
     if (!text || prefersReducedMotion() || !inner.current) {
       setDone(true);
@@ -177,56 +283,39 @@ export function RevealHeading({ as: Tag = 'h2', className = '', children, delay 
           }
           rows[rows.length - 1].push(words[i]);
         });
-        const cs = getComputedStyle(outer.current);
-        target.current = { wdth: parseFloat(cs.getPropertyValue('--wdth')) || 100, wght: parseFloat(cs.getPropertyValue('--wght')) || 700 };
         setLines(rows);
       };
-      if (document.fonts?.status === 'loaded') measure();
+      if (!document.fonts || document.fonts.status === 'loaded') measure();
       else document.fonts.ready.then(measure);
     },
-    { amount: 0.4 },
+    { amount: 0.3 },
   );
 
-  // Split into lines: set the starting state and play, before the split is painted.
   useIsoLayoutEffect(() => {
     if (!lines || done) return;
     const el = inner.current;
-    const finish = () => setDone(true);
     gsap.set(el, { opacity: 1 });
-    if (voice === 'wide') {
-      const { wdth, wght } = target.current;
-      gsap.fromTo(el.querySelectorAll('[data-line]'), { '--wdth': 50, '--wght': 240, opacity: 0 }, { '--wdth': wdth, '--wght': wght, opacity: 1, duration: 1.5, ease: 'expo.out', stagger: 0.12, delay, onComplete: finish });
-    } else if (voice === 'poster') {
-      gsap.fromTo(el.querySelectorAll('[data-c]'), { scaleY: 0, transformOrigin: '50% 100%' }, { scaleY: 1, duration: 0.9, ease: 'expo.out', stagger: 0.025, delay, onComplete: finish });
-    } else {
-      gsap.fromTo(el.querySelectorAll('[data-w]'), { opacity: 0, filter: 'blur(14px)', y: '0.16em' }, { opacity: 1, filter: 'blur(0px)', y: 0, duration: 1.1, ease: 'power3.out', stagger: 0.05, delay, onComplete: finish });
-    }
+    gsap.fromTo(
+      el.querySelectorAll('[data-line] > span'),
+      { yPercent: 115 },
+      { yPercent: 0, duration: 1.4, ease: 'expo.out', stagger: 0.09, delay, onComplete: () => setDone(true) },
+    );
   }, [lines]);
-
-  const word = (w, i) => (
-    <React.Fragment key={i}>
-      {i > 0 && ' '}
-      <span data-w className={lines ? 'inline-block' : undefined}>
-        {voice === 'poster' && lines
-          ? [...w].map((c, ci) => (
-              <span key={ci} data-c className="inline-block">
-                {c}
-              </span>
-            ))
-          : w}
-      </span>
-    </React.Fragment>
-  );
 
   let content = children;
   if (!done) {
     content = lines
       ? lines.map((ws, li) => (
-          <span key={li} data-line className="block whitespace-nowrap" style={voice === 'wide' ? VARS : undefined}>
-            {ws.map(word)}
+          <span key={li} data-line className="mask-line">
+            <span className="block whitespace-nowrap">{ws.join(' ')}</span>
           </span>
         ))
-      : words.map(word);
+      : words.map((w, i) => (
+          <React.Fragment key={i}>
+            {i > 0 && ' '}
+            <span data-w>{w}</span>
+          </React.Fragment>
+        ));
   }
 
   return (
@@ -238,7 +327,7 @@ export function RevealHeading({ as: Tag = 'h2', className = '', children, delay 
 
 /**
  * For the stacked panels: the top edge arrives as one soft curve across the whole width and
- * settles into its rounded corners as the panel lands on the one before it.
+ * settles into its rounded corners as the panel slides over the one before it.
  */
 export function useEdgeSettle(ref) {
   const armed = useRef(false);
@@ -257,14 +346,14 @@ export function useEdgeSettle(ref) {
       if (!armed.current) return;
       const el = ref.current;
       gsap.set(el, { clearProps: 'borderTopLeftRadius,borderTopRightRadius' });
-      const r = getComputedStyle(el).borderTopLeftRadius;
-      const end = `${parseFloat(r)}px ${parseFloat(r)}px`;
+      const r = parseFloat(getComputedStyle(el).borderTopLeftRadius);
+      const end = `${r}px ${r}px`;
       gsap.fromTo(
         el,
         { borderTopLeftRadius: start.current, borderTopRightRadius: start.current },
         { borderTopLeftRadius: end, borderTopRightRadius: end, duration: 1.4, ease: 'expo.out', clearProps: 'borderTopLeftRadius,borderTopRightRadius' },
       );
     },
-    { amount: 0, margin: '0px 0px -12% 0px' },
+    { amount: 0, margin: '0px 0px -12% 0px', gate: false },
   );
 }

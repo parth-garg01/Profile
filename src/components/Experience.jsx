@@ -4,7 +4,7 @@ import { Reveal, RevealHeading } from '../lib/motion.jsx';
 
 export function Experience() {
   return (
-    <section id="experience" className="on-light section bg-cream text-ink" aria-labelledby="exp-title">
+    <section id="experience" data-scene className="scene on-light section bg-cream text-ink" aria-labelledby="exp-title">
       <div className="page">
         <RevealHeading id="exp-title" className="t-serif text-[clamp(56px,7vw,116px)]">
           Where I’ve worked
@@ -38,13 +38,13 @@ export function Experience() {
 
 export function Recognition() {
   return (
-    <section id="recognition" className="section bg-teal" aria-labelledby="rec-title">
+    <section id="recognition" data-scene className="scene section bg-teal" aria-labelledby="rec-title">
       <div className="page grid gap-16 lg:grid-cols-12 lg:gap-10">
         <div className="lg:col-span-7">
           <RevealHeading id="rec-title" className="t-wide text-[clamp(40px,4.6vw,74px)]">
             Recognition
           </RevealHeading>
-          <Reveal as="ul" mode="pill" className="mt-12 grid gap-4">
+          <Reveal as="ul" mode="card" className="mt-12 grid gap-4">
             {recognition.map((r, i) => (
               <li
                 key={r.title}

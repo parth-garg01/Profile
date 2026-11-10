@@ -4,7 +4,7 @@ import { Reveal, RevealHeading } from '../lib/motion.jsx';
 
 export default function About() {
   return (
-    <section id="about" className="on-light section bg-cream text-ink">
+    <section id="about" data-scene className="scene on-light section bg-cream text-ink">
       <div className="page grid gap-14 lg:grid-cols-12 lg:gap-10">
         <RevealHeading className="t-serif text-[clamp(46px,5.6vw,92px)] lg:col-span-7">{about.statement}</RevealHeading>
 
@@ -14,7 +14,7 @@ export default function About() {
           ))}
         </Reveal>
 
-        <Reveal mode="pill" className="grid gap-5 md:grid-cols-2 lg:col-span-12 lg:grid-cols-12">
+        <Reveal mode="card" className="grid gap-5 md:grid-cols-2 lg:col-span-12 lg:grid-cols-12">
           <div className="rounded-[28px] bg-sun p-8 text-ink md:p-10 lg:col-span-7">
             <p className="meta">Working on now</p>
             <p className="t-serif mt-4 text-[clamp(28px,2.6vw,42px)] leading-[1.08]">

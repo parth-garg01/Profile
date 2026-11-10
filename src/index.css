@@ -14,7 +14,7 @@
   body {
     @apply bg-blue font-sans text-body text-cream antialiased;
     margin: 0;
-    overflow-x: hidden;
+    overflow-x: clip;
   }
 
   ::selection {
@@ -113,6 +113,20 @@
   }
 
   /* Masked line used by the heading reveal: text slides up from beneath the baseline. */
+  /* Sticky scene: the next one slides over it. Its top offset is set from JS (see useScenes). */
+  .scene {
+    position: sticky;
+    min-height: 100svh;
+  }
+
+  /* One line of a heading, masked at its own baseline so the text can rise from behind it. */
+  .mask-line {
+    display: block;
+    overflow: hidden;
+    padding: 0.12em 0 0.1em;
+    margin: -0.12em 0 -0.1em;
+  }
+
   .reveal-line {
     display: block;
     overflow: hidden;
