@@ -16,7 +16,7 @@ function Channel({ label, value, href, download, external }) {
         <span aria-hidden="true" className="absolute inset-0 origin-left scale-x-0 bg-cream transition-transform duration-[650ms] ease-soft group-hover:scale-x-100" />
         <span className="relative flex min-w-0 flex-col transition-colors duration-300 group-hover:text-ink sm:flex-row sm:items-baseline sm:gap-4">
           <span className="text-small text-mist transition-colors duration-300 group-hover:text-ink/70">{label}</span>
-          <span className="truncate text-[18px] font-semibold">{value}</span>
+          <span className="truncate text-[18px] font-medium">{value}</span>
         </span>
         <Icon className="relative shrink-0 transition-all duration-500 ease-soft group-hover:-translate-y-0.5 group-hover:translate-x-0.5 group-hover:text-ink" size={22} aria-hidden="true" />
         {external && <span className="sr-only"> (opens in a new tab)</span>}

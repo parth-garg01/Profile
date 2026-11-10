@@ -48,7 +48,7 @@ export default function Papers() {
               {paper.publisher}, {paper.year}. {paper.role}.
             </p>
             <h3 className="mt-6 font-serif text-[clamp(30px,3vw,46px)] leading-[1.08]">{paper.title}</h3>
-            <p className="mt-6 text-small font-semibold opacity-75">{paper.venue}</p>
+            <p className="mt-6 text-small opacity-75">{paper.venue}</p>
             <p className="mt-6 max-w-read text-body">{paper.note}</p>
             <div className="mt-auto flex flex-wrap gap-x-6 pt-8">
               <TextLink href={paper.doi}>Read on IEEE Xplore</TextLink>
@@ -59,20 +59,20 @@ export default function Papers() {
           <article className="on-light grid overflow-hidden rounded-[28px] bg-mint text-ink sm:grid-cols-[1fr_auto]">
             <div className="flex flex-col p-8 md:p-12">
               <p className="meta">Patent application, {patent.office}</p>
-              <h3 className="t-poster-sm mt-6 text-[clamp(26px,2.3vw,36px)]">{patent.title}</h3>
+              <h3 className="t-serif mt-6 text-[clamp(30px,2.8vw,44px)] leading-[1.06]">{patent.title}</h3>
               <dl className="mt-8 grid gap-4">
                 <div>
-                  <dt className="text-small font-semibold opacity-70">Application number</dt>
+                  <dt className="text-small opacity-70">Application number</dt>
                   <dd className="mt-1 flex flex-wrap items-center gap-3">
-                    <span className="t-wide text-[clamp(22px,2vw,30px)] tabular-nums">
+                    <span className="t-serif text-[clamp(30px,2.8vw,42px)] tabular-nums">
                       {patent.number}
                     </span>
                     <CopyNumber value={patent.number} />
                   </dd>
                 </div>
                 <div>
-                  <dt className="text-small font-semibold opacity-70">Published</dt>
-                  <dd className="font-semibold">{patent.published}</dd>
+                  <dt className="text-small opacity-70">Published</dt>
+                  <dd>{patent.published}</dd>
                 </div>
               </dl>
               <p className="mt-6 max-w-read text-body">{patent.note}</p>

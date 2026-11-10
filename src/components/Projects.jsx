@@ -29,7 +29,7 @@ function Row({ p }) {
           <span className="block max-w-read text-body">{p.summary}</span>
           <span className="mt-2 block text-small text-mist transition-colors duration-300 group-hover:text-ink/75">{p.stack}</span>
         </span>
-        <span className="relative flex items-start justify-between gap-3 font-semibold transition-colors duration-300 group-hover:text-ink md:flex-col md:items-end">
+        <span className="relative flex items-start justify-between gap-3 font-medium tabular-nums transition-colors duration-300 group-hover:text-ink md:flex-col md:items-end">
           <span>{p.year}</span>
           <ArrowUpRight size={24} aria-hidden="true" className="transition-transform duration-500 ease-soft group-hover:-translate-y-1 group-hover:translate-x-1" />
         </span>
@@ -86,7 +86,7 @@ export default function Projects() {
   return (
     <section id="projects" className="section" aria-labelledby="projects-title">
       <div className="page">
-        <RevealHeading id="projects-title" className="t-wide text-[clamp(40px,5.2vw,84px)]">
+        <RevealHeading id="projects-title" className="t-poster text-[clamp(64px,9vw,148px)]">
           More things I’ve built
         </RevealHeading>
 
@@ -120,7 +120,7 @@ export default function Projects() {
         <div ref={list} className="mt-6">
           {groups.map((g) => (
             <div key={g.cat.id} className="mt-10 first:mt-4">
-              <h3 data-row className="flex items-center gap-3 pb-4 text-small font-semibold">
+              <h3 data-row className="flex items-center gap-3 pb-4 text-small font-medium">
                 <span aria-hidden="true" className="h-3.5 w-10 rounded-full" style={{ background: g.cat.color }} />
                 {g.cat.name}
                 <span className="font-normal text-mist">{g.items.length < g.total ? `1 of ${g.total}` : g.total}</span>

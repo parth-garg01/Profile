@@ -81,7 +81,7 @@ export default function Hero() {
       <div data-hero-band className="on-light bg-pink text-ink">
         <div className="page grid gap-6 py-8 md:grid-cols-12 md:gap-10 md:py-10">
           <div className="md:col-span-5">
-            <p data-hero-rise className="t-serif-i text-[clamp(32px,3.2vw,50px)]">
+            <p data-hero-rise className="t-wide text-[clamp(24px,2.3vw,36px)]" style={{ '--wght': 560 }}>
               {profile.role}
             </p>
             <p data-hero-rise className="mt-3 text-body opacity-80">

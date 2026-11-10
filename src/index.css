@@ -90,9 +90,9 @@
   .t-wide {
     @apply font-display;
     --wdth: 140;
-    --wght: 760;
+    --wght: 680;
     font-variation-settings: 'wdth' var(--wdth), 'wght' var(--wght);
-    font-weight: 760;
+    font-weight: 680;
     line-height: 0.98;
     letter-spacing: -0.035em;
   }
@@ -109,7 +109,7 @@
   }
 
   .meta {
-    @apply text-small font-semibold;
+    @apply text-small font-medium;
   }
 
   /* Masked line used by the heading reveal: text slides up from beneath the baseline. */
