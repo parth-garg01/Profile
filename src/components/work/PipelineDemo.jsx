@@ -49,7 +49,7 @@ export default function PipelineDemo() {
         <span>{done ? 'Done' : step < 0 ? 'Ready' : 'Running'}</span>
       </div>
 
-      <ol className="relative mt-6 grid gap-1">
+      <ol className="relative mt-5 grid gap-1 lg:gap-0 short:mt-3">
         <span aria-hidden="true" className="absolute bottom-4 left-[15px] top-4 w-[2px] bg-cream/15" />
         <span
           aria-hidden="true"
@@ -59,7 +59,7 @@ export default function PipelineDemo() {
         {STEPS.map(([title, note], i) => {
           const state = step > i ? 'done' : step === i ? 'active' : 'idle';
           return (
-            <li key={title} className="relative grid grid-cols-[32px_1fr] items-start gap-4 py-2">
+            <li key={title} className="relative grid grid-cols-[32px_1fr] items-start gap-4 py-2 lg:py-1.5 short:py-1">
               <span
                 aria-hidden="true"
                 className={cx(
@@ -81,7 +81,7 @@ export default function PipelineDemo() {
         })}
       </ol>
 
-      <div className="mt-6 border-t border-cream/15 pt-5">
+      <div className="mt-5 border-t border-cream/15 pt-4 short:mt-3 short:pt-3">
         <p className="text-small text-mist">Job, tracked in a SQLite state machine with retries and backoff</p>
         <div className="relative mt-3 grid grid-cols-4 gap-1 rounded-full bg-cream/10 p-1">
           <span
@@ -97,7 +97,7 @@ export default function PipelineDemo() {
         </div>
       </div>
 
-      <div className="mt-5 flex items-center justify-between gap-3">
+      <div className="mt-4 flex items-center justify-between gap-3">
         <span className="text-small text-mist">An illustration of one run.</span>
         <button
           key={run}

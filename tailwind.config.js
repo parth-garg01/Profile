@@ -9,6 +9,8 @@ export default {
       lg: '1024px',
       xl: '1280px',
       '2xl': '1536px',
+      // Desktop screens with little height (e.g. a 1440x900 laptop with browser chrome).
+      short: { raw: '(min-width: 1024px) and (max-height: 860px)' },
     },
     extend: {
       colors: {
